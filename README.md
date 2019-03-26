@@ -133,7 +133,7 @@ void ReadUserModel(string json,JsonDeserializeHandler handler)
 									i++;
 		}
 	}
-	ReadObjRight()
+    ReadObjRight()
 }
 ```
 KoobooJson生成反序列化代码, KoobooJson会假设json格式完全正确, 没有预先读取Json结构部分, 而是直接使用代码来描述结构, 所以KoobooJson少了一次对json结构的扫描, 执行过程中如果json结构发生错误, 会直接抛出异常.
@@ -228,6 +228,7 @@ json => {}
 
 
 **排序特性**
+
 ```
 class A
 {
@@ -262,6 +263,22 @@ JsonSerializerOption option = new JsonSerializerOption { IgnoreKeys = new List<s
 var json = JsonSerializer.ToJson(A, option);
 json => {}
 ```
+
+
+
+ **序列化时仅包含该元素**
+
+```
+class A
+{
+    [JsonOnlyInclude]
+    public int a;
+    public int b;  
+    public int c;  
+}
+json => {\"a\":0}
+```
+如果一个model里包含几十个元素, 而你仅想序列化其中一个, 那么你没必要对每一个元素进行[IgnoreKey]标记,只需要对想要序列化的元素标记[JsonOnlyInclude]即可
 
 
 
@@ -301,24 +318,6 @@ json => \/Date(628318530718)\/
  }
  json => {\"R01_Name\":0}
 ```
-
-
-
- **序列化时仅包含该元素**
-
-```
-class A
-{
-    [JsonOnlyInclude]
-    public int a;
-    public int b;  
-    public int c;  
-}
-
-json => {\"a\":0}
-```
-
-如果一个model里包含几十个元素, 而你仅想序列化其中一个, 那么你没必要对每一个元素进行[IgnoreKey]标记,只需要对想要序列化的元素标记[JsonOnlyInclude]即可
 
 
 
