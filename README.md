@@ -18,7 +18,7 @@ KoobooJson生成代码的方式并没有采用Emit, 而是采用ExpressionTree. 
 
 ![JsonPerformanceComparison](https://github.com/Kooboo/Json/blob/master/JsonPerformanceComparison.png)
 
-上图是使用[BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet)在Net Core2.1上做的Json序列化和反序列化的性能测试,随机生成大量的测试数据,迭代100次后产生的结果
+上图是使用[BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet)在Net Core2.1上做的Json序列化和反序列化的性能测试,随机生成大量的测试数据,迭代100次后产生的结果,基准报告在[**这里**](https://github.com/Kooboo/Json/tree/master/Kooboo.Json.Benchmark/Reports)
 
 > BenchmarkDotNet=v0.11.4, OS=Windows 10.0.17763.316 (1809/October2018Update/Redstone5)
 > Intel Core i7-8550U CPU 1.80GHz (Kaby Lake R), 1 CPU, 8 logical and 4 physical cores
