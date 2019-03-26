@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>KoobooJson.Benchmark.JsonNet</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.11.4, OS=Windows 10.0.17763.316 (1809/October2018Update/Redstone5)
+Intel Core i7-8550U CPU 1.80GHz (Kaby Lake R), 1 CPU, 8 logical and 4 physical cores
+.NET Core SDK=2.1.505
+  [Host]     : .NET Core 2.1.9 (CoreCLR 4.6.27414.06, CoreFX 4.6.27415.01), 64bit RyuJIT
+  Job-XEQPPS : .NET Core 2.1.9 (CoreCLR 4.6.27414.06, CoreFX 4.6.27415.01), 64bit RyuJIT
+</code></pre>
+<pre><code>IterationCount=100  LaunchCount=1  WarmupCount=1  
+</code></pre>
+
+<table>
+<thead><tr><th>    Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th>
+</tr>
+</thead><tbody><tr><td>ArrayToJson</td><td>85.464 us</td><td>0.5775 us</td><td>1.6002 us</td><td>85.269 us</td>
+</tr><tr><td>DictionaryToJson</td><td>56.422 us</td><td>0.4093 us</td><td>1.1610 us</td><td>56.371 us</td>
+</tr><tr><td>ListToJson</td><td>99.092 us</td><td>2.3965 us</td><td>6.7200 us</td><td>97.915 us</td>
+</tr><tr><td>EntityToJson</td><td>2.529 us</td><td>0.0109 us</td><td>0.0302 us</td><td>2.521 us</td>
+</tr><tr><td>JsonToArray</td><td>142.847 us</td><td>1.6871 us</td><td>4.9213 us</td><td>142.484 us</td>
+</tr><tr><td>JsonToDictionary</td><td>99.744 us</td><td>3.3349 us</td><td>9.4061 us</td><td>95.983 us</td>
+</tr><tr><td>JsonToList</td><td>163.788 us</td><td>1.8132 us</td><td>5.2604 us</td><td>162.800 us</td>
+</tr><tr><td>JsonToEntity</td><td>5.333 us</td><td>0.1347 us</td><td>0.3731 us</td><td>5.230 us</td>
+</tr></tbody></table>
+</body>
+</html>

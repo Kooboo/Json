@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>
+      <!--net40;-->netcoreapp2.0;netcoreapp2.1;netstandard2.0;<!--netstandard1.6;-->net45;
+    </TargetFrameworks>
+    <!--<PackageLicenseExpression>MIT</PackageLicenseExpression>-->
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+  </ItemGroup>
+
+  <!--<PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <DefineConstants></DefineConstants>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>FFFF</PackageId>
+    <Authors>JiFeng</Authors>
+    <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Kooboo/Json</PackageProjectUrl>
+  </PropertyGroup>-->
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netcoreapp2.1|AnyCPU'">
+    <DocumentationFile>C:\KoobooCode\Kooboo20159\Kooboo2015\src\Kooboo.Json\Kooboo.Json.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.1|AnyCPU'">
+    <DocumentationFile>C:\KoobooCode\Kooboo20159\Kooboo2015\src\Kooboo.Json\Kooboo.Json.xml</DocumentationFile>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <None Remove="Kooboo.Json.xml" />
+  </ItemGroup>
+
+
+</Project>
