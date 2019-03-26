@@ -35,19 +35,28 @@ KoobooJson生成代码的方式并没有采用Emit, 而是采用ExpressionTree. 
 **a**. KoobooJson将序列化分为5种类型：
 
  - [原始类型](https://docs.microsoft.com/en-us/dotnet/api/system.type.isprimitive?view=netframework-4.7.2)
-    	它包括 Boolean, Byte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, IntPtr, UIntPtr, Char, Double, and Single.
+
+     它包括 Boolean, Byte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, IntPtr, UIntPtr, Char, Double, and Single.
+
 - 所有拥有键值对行为的类型
-  	任何能够实现IDictionary<>或能够实现IDictionary且能够通过构造函数注入键值对的类型, 都将以键值对方式进行解析
+
+  任何能够实现IDictionary<>或能够实现IDictionary且能够通过构造函数注入键值对的类型, 都将以键值对方式进行解析
+
 - 所有拥有集合行为的类型
-  	任何能够实现IEnumable并且满足IColloction的Add行为或拥有自己独特的集合行为且能够通过构造函数注入集合的类型, 都将以集合方式进行解析
+
+  任何能够实现IEnumable并且满足IColloction的Add行为或拥有自己独特的集合行为且能够通过构造函数注入集合的类型, 都将以集合方式进行解析
+
 - 特殊类型
-  	如Nullable<>, Lazy<>, Guid, Datatable, DateTime, Type, Task, Thread, Timespan...等等这些特定的类型实现
+
+  如Nullable<>, Lazy<>, Guid, Datatable, DateTime, Type, Task, Thread, Timespan...等等这些特定的类型实现
+
 - 常规Model的键值对类型
-  	在KoobooJson中, 如果当类型不满足上述4种时, 将会以键值对的形式来对其解析, KoobooJson会对Model中公开的所有元素进行序列化, 在这个环节, 几乎配置器中所有的配置都是有关Model的. 诸如别名, 忽略特性, 指定构造函数, 忽略堆栈循环引用, 首字母大小写, 格式化器...   值得一提的是, 在对接口类型进行反序列化时, KoobooJson默认会自动创建并返回一个实现于该接口的对象.
+
+  在KoobooJson中, 如果当类型不满足上述4种时, 将会以键值对的形式来对其解析, KoobooJson会对Model中公开的所有元素进行序列化, 在这个环节, 几乎配置器中所有的配置都是有关Model的. 诸如别名, 忽略特性, 指定构造函数, 忽略堆栈循环引用, 首字母大小写, 格式化器...   值得一提的是, 在对接口类型进行反序列化时, KoobooJson默认会自动创建并返回一个实现于该接口的对象.
 
 **b**. 在对类型的解析上, 其中浮点型,日期时间类型, GUID的解析是参照了[JIL](https://github.com/kevin-montrose/Jil)的代码, 在此表示感谢.
 
-​        作为一款活跃的Json库,  KoobooJson会不断支持更多的类型,  这其中,  因为对FCL中的键值对和集合的行为进行归纳,  所以对于这两种类型,  KoobooJson并不像其它框架一样去特定的为每种类型单独实现,  实际上, 第2和3所定义的规则可以容纳FCL中的大多数键值对或集合类型.目前KoobooJson所覆盖的类型包括:
+​    作为一款活跃的Json库,  KoobooJson会不断支持更多的类型,  这其中,  因为对FCL中的键值对和集合的行为进行归纳,  所以对于这两种类型,  KoobooJson并不像其它框架一样去特定的为每种类型单独实现,  实际上, 第2和3所定义的规则可以容纳FCL中的大多数键值对或集合类型.目前KoobooJson所覆盖的类型包括:
 Hashtable, SortedList, ArrayList, IDictionary, Dictionary<,>, IList,List<>, IEnumerable<>, IEnumerable, ICollection, ICollection<>, Stack<>, Queue<>, ConcurrentBag<>, ConcurrentQueue<>,  ConcurrentStack<>, SortedDictionary<,>, ConcurrentDictionary<,>, SortedList<,>, IReadOnlyDictionary<,>, ReadOnlyDictionary<,>, ObservableCollection<>, HashSet<>, SortedSet<>, LinkedList<>, ReadOnlyCollection<>, ArraySegment<>, Stack, Queue, IReadOnlyList<>, IReadOnlyCollection<>, ReadOnlyCollection<>, ISet<>, BitArray, URI, NameValueCollection, StringDictionary, ExpandoObject, StringBuilder, Nullable<>, Lazy<>, Guid, Datatable, DateTime, Type, Task, Thread, Timespan, Enum, Exception, Array[], Array[,,,,,]...
 
 ### 二.   KoobooJson的实现
