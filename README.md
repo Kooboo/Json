@@ -151,6 +151,7 @@ case 5:
 #### 三. 功能介绍
 
 **忽略注释**
+
 在json字符串的读取中KoobooJson会自动去除注释
 ```
 string json = @"
@@ -387,7 +388,9 @@ JsonSerializerOption.GlobalValueFormat=(value,type,handler,isValueFormat)=>
 
 
 **全局Key格式化**
+
 对于Model中的Key处理, KoobooJson支持全局的Key格式化器.
+
 ```
  class R01_User
  {
