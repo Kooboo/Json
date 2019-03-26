@@ -72,16 +72,15 @@ void WriteUserModel(UserModel model,JsonSerializerHandler handler)
   ...配置选项处理...格式化器处理...堆栈无限引用处理...
   handler.sb.Write("Obj:")
   WriteObject(model.Obj);//在序列化时将为Object类型做二次真实类型查找
-	  
-```
+
   handler.sb.Write("Name:")
   WriteString(model.Name);
 
   handler.sb.Write("Age:")
   WriteInt(model.Age);
-  ```
+  
 }
-  ```
+```
 
 如果是**List<UserModel>**的话, 那么将生成这样的代码
 
