@@ -1,9 +1,5 @@
 
 
-
-
-
-
 Internet Engineering Task Force (IETF)                      T. Bray, Ed.
 Request for Comments: 8259                                    Textuality
 Obsoletes: 7159                                            December 2017
