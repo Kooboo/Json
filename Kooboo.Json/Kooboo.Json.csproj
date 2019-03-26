@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>
-      <!--net40;-->netcoreapp2.0;netcoreapp2.1;netstandard2.0;<!--netstandard1.6;-->net45;
+      <!--net40;-->netcoreapp2.1;net45;netstandard2.0;netcoreapp2.0;<!--netstandard1.6;-->
     </TargetFrameworks>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Company>Yardi (xiamen) Technology Co. LTD</Company>
@@ -35,17 +35,26 @@
 
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netcoreapp2.1|AnyCPU'">
-    <DocumentationFile>C:\KoobooCode\Kooboo20159\Kooboo2015\src\Kooboo.Json\Kooboo.Json.xml</DocumentationFile>
+    <DocumentationFile>C:\code\KoobooJson\KoobooJson\Kooboo.Json\Kooboo.Json.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.1|AnyCPU'">
-    <DocumentationFile>C:\KoobooCode\Kooboo20159\Kooboo2015\src\Kooboo.Json\Kooboo.Json.xml</DocumentationFile>
+    <DocumentationFile>C:\code\KoobooJson\KoobooJson\Kooboo.Json\Kooboo.Json.xml</DocumentationFile>
   </PropertyGroup>
 
-
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netcoreapp2.0|AnyCPU'">
+    <DocumentationFile>C:\code\KoobooJson\KoobooJson\Kooboo.Json\Kooboo.Json.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>C:\code\KoobooJson\KoobooJson\Kooboo.Json\Kooboo.Json.xml</DocumentationFile>
+  </PropertyGroup>
+  
+  
   <ItemGroup>
     <None Remove="Kooboo.Json.xml" />
   </ItemGroup>
+
+
 
 
 </Project>
