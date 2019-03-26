@@ -1,6 +1,6 @@
 #                 KoobooJson - 更小更快的C# JSON序列化工具(基于表达式树构建)
 
-#### 一.   KoobooJson的优点
+### 一.   KoobooJson的优点
 
 **1. 小巧**
 
@@ -50,7 +50,7 @@ KoobooJson生成代码的方式并没有采用Emit, 而是采用ExpressionTree. 
 ​        作为一款活跃的Json库,  KoobooJson会不断支持更多的类型,  这其中,  因为对FCL中的键值对和集合的行为进行归纳,  所以对于这两种类型,  KoobooJson并不像其它框架一样去特定的为每种类型单独实现,  实际上, 第2和3所定义的规则可以容纳FCL中的大多数键值对或集合类型.目前KoobooJson所覆盖的类型包括:
 Hashtable, SortedList, ArrayList, IDictionary, Dictionary<,>, IList,List<>, IEnumerable<>, IEnumerable, ICollection, ICollection<>, Stack<>, Queue<>, ConcurrentBag<>, ConcurrentQueue<>,  ConcurrentStack<>, SortedDictionary<,>, ConcurrentDictionary<,>, SortedList<,>, IReadOnlyDictionary<,>, ReadOnlyDictionary<,>, ObservableCollection<>, HashSet<>, SortedSet<>, LinkedList<>, ReadOnlyCollection<>, ArraySegment<>, Stack, Queue, IReadOnlyList<>, IReadOnlyCollection<>, ReadOnlyCollection<>, ISet<>, BitArray, URI, NameValueCollection, StringDictionary, ExpandoObject, StringBuilder, Nullable<>, Lazy<>, Guid, Datatable, DateTime, Type, Task, Thread, Timespan, Enum, Exception, Array[], Array[,,,,,]...
 
-#### 二.   KoobooJson的实现
+### 二.   KoobooJson的实现
 
 **序列化**
 
@@ -148,7 +148,7 @@ case 5:
 
 因为是指针操作, KoobooJson在反序列化环节几乎不需要去维护一个char池来存放下一个需要读取的json结构片段.
 
-#### 三. 功能介绍
+### 三. 功能介绍
 
 **忽略注释**
 
@@ -181,7 +181,7 @@ class A
 }
 class B
 {
-	public A a;
+    public A a;
 }
 A.b=B;
 B.a=A;
