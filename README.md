@@ -91,7 +91,7 @@ void WriteUserModel(UserModel model,JsonSerializerHandler handler)
 }
 ```
 
-如果是**List<UserModel>**的话, 那么将生成这样的代码
+如果是List<UserModel>的话, 那么将生成这样的代码
 
 ```
 handler.sb.Write("[")
@@ -161,7 +161,7 @@ case 5:
 
 **忽略注释**
 
-在json字符串的读取中KoobooJson会自动去除注释
+在json字符串的读取中KoobooJson会自动忽略注释
 ```
 string json = @"
                  /*注释*/
