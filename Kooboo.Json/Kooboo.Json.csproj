@@ -4,7 +4,15 @@
     <TargetFrameworks>
       <!--net40;-->netcoreapp2.0;netcoreapp2.1;netstandard2.0;<!--netstandard1.6;-->net45;
     </TargetFrameworks>
-    <!--<PackageLicenseExpression>MIT</PackageLicenseExpression>-->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Company>Yardi (xiamen) Technology Co. LTD</Company>
+    <Authors>JiFeng</Authors>
+    <Description>Smaller and faster C# JSON serialization tool</Description>
+    <Copyright>Copyright © Yardi (xiamen) Technology Co. LTD 2019</Copyright>
+    <PackageProjectUrl>https://github.com/Kooboo/Json</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Kooboo/Json.git</RepositoryUrl>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <PackageTags>json;kooboo;Serialization;Formatter;Serializer;</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,15 +33,6 @@
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
   </ItemGroup>
 
-  <!--<PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <DefineConstants></DefineConstants>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>FFFF</PackageId>
-    <Authors>JiFeng</Authors>
-    <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/Kooboo/Json</PackageProjectUrl>
-  </PropertyGroup>-->
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netcoreapp2.1|AnyCPU'">
     <DocumentationFile>C:\KoobooCode\Kooboo20159\Kooboo2015\src\Kooboo.Json\Kooboo.Json.xml</DocumentationFile>
