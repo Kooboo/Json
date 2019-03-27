@@ -30,7 +30,7 @@ namespace Kooboo.Json
         /// <returns>JSON strings</returns>
         public static string ToJson<T>(T value, JsonSerializerOption option)
         {
-            var handler = new JsonSerializerHandler {Option = option};
+            var handler = new JsonSerializerHandler { Option = option };
             Serializer.FormattingProvider<T>.Get(value, handler);
             return handler.ToString();
         }

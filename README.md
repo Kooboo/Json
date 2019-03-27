@@ -138,7 +138,7 @@ void ReadUserModel(string json,JsonDeserializeHandler handler)
 ```
 KoobooJson生成反序列化代码, KoobooJson会假设json格式完全正确, 没有预先读取Json结构部分, 而是直接使用代码来描述结构, 所以KoobooJson少了一次对json结构的扫描, 执行过程中如果json结构发生错误, 会直接抛出异常.
 
-你会注意到, 对于key的匹配, KoobooJson生成的是逐个char的自动机匹配代码, 目前KoobooJson是以字典树为算法, 逐个char进行类型比较, 与一次比较多个char相比, 这种方式显然没有达到最小的查询路径, 不过在jit优化下, 两种方式实现经测试效率几乎一样.
+而对于key的匹配, KoobooJson生成的是逐个char的自动机匹配代码, 目前KoobooJson是以字典树为算法, 逐个char进行类型比较, 与一次比较多个char相比, 这种方式显然没有达到最小的查询路径, 不过在jit优化下, 两种方式实现经测试效率几乎一样.
 
 在反序列化读取字符时, 因为是对类型动态生成编码, 提前知道每个类型中的元素的字节长度和其类型的值长度, 所以KoobooJson出于更高的性能对反序列化采取了指针操作, 并加速字节读取.
 
@@ -158,6 +158,10 @@ case 5:
 因为是指针操作, KoobooJson在反序列化环节几乎不需要去维护一个char池来存放下一个需要读取的json结构片段.
 
 ### 三. 功能介绍
+KoobooJson当前仅支持3个API调用
+string Kooboo.Json.ToJson<T>(T value, JsonSerializerOption option=null)
+T ToObject<T>(string json, JsonDeserializeOption option=null)
+T ToObject(string json, Type type, JsonDeserializeOption option=null)
 
 **忽略注释**
 
@@ -241,8 +245,8 @@ class A
 }
 ```
 可通过[JsonOrder(int orderNum)]来排序序列化的json元素位置.
-未加JsonOrder是这样的：{\"a\":0,\"b\":0,\"c\":0}
-加了之后是这样的：{\"c\":0,\"b\":0,\"a\":0}
+如果是正常没有通过[JsonOrder]排序元素,那么解析出来的Json则是默认顺序：{\"a\":0,\"b\":0,\"c\":0}
+上面样例通过[JsonOrder]排序后是这样的：{\"c\":0,\"b\":0,\"a\":0}
 
 
 
@@ -278,7 +282,7 @@ class A
 }
 json => {\"a\":0}
 ```
-如果一个model里包含几十个元素, 而你仅想序列化其中一个, 那么你没必要对每一个元素进行[IgnoreKey]标记,只需要对想要序列化的元素标记[JsonOnlyInclude]即可
+如果一个model里包含几十个元素, 而你仅想序列化其中一个, 那么就没必要对每一个元素进行[IgnoreKey]标记,只需要对想要序列化的元素标记[JsonOnlyInclude]即可
 
 
 
@@ -305,7 +309,7 @@ json => \/Date(628318530718)\/
  JsonSerializerOption option = new JsonSerializerOption { JsonCharacterRead=JsonCharacterReadStateEnum.InitialUpper };
  json => {\"Name\":0}
 ```
- 注意：首字母大小写属于内嵌支持, 在解析时并不会影响速度
+ 在对model序列化时可以指定key的首字母大小写,反序列化时也可以设置对字符串不区分大小写.首字母大小写属于内嵌支持, 在解析时并不会影响性能
 
 
 
@@ -318,7 +322,7 @@ json => \/Date(628318530718)\/
  }
  json => {\"R01_Name\":0}
 ```
-
+当元素被标记[Alias]后,KoobooJson无论序列化还是反序列化都会按照Alias来进行解析
 
 
 **反序列化时指定构造函数**
@@ -331,8 +335,8 @@ class A
 }
 ```
 在反序列化的时候, 我们不得不调用构造函数来以此创建对象.
-在常规情况下, KoobooJson自动搜索最优的构造函数：
-	搜索优先级 public noArgs => private noArgs => public Args => private Args, 这其中, 会对有参构造函数进行默认值构造.
+在常规情况下, KoobooJson会通过优先级自动搜索最合适的构造函数,其优先级顺序为:
+public noArgs => private noArgs => public Args => private Args, 这其中, 会对有参构造函数进行默认值构造.
 
 然而你也可以显式通过[JsonDeserializeCtor(params object[] args)]特性来指定反序列化时的构造函数, 
 这样 当KoobooJson创建A实例的时候就不是通过new A(); 而是new A(3,"ss");
@@ -406,7 +410,7 @@ JsonSerializerOption.GlobalValueFormat=(value,type,handler,isValueFormat)=>
      public int R01_Age;
  }
 ```
-如果我们想把R01这个前缀给去掉, 只需要注册全局委托即可
+如果我们想把R01这个前缀给去掉, 只需要注册全局Key格式化器的委托即可
 ```
 JsonSerializerOption.GlobalKeyFormat=(key,parentType,handler)=>
 {
@@ -418,7 +422,7 @@ JsonSerializerOption.GlobalKeyFormat=(key,parentType,handler)=>
 ```
 这样,出来的json是这样的：{\"Name\":\"\",\"Age\":\"\"}
 
-同样, 对于反序列化，我们也应该注册：
+同样, 对于反序列化，我们也同样应该注册：
 ```
 JsonDeserializeOption.GlobalKeyFormat=(key,parentType)=>
 {
