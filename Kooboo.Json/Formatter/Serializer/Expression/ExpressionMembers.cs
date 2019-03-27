@@ -40,8 +40,8 @@ namespace Kooboo.Json.Serializer
         //- handler.option.ignoreKeys.count() == 0
         internal static readonly BinaryExpression IgnoreKeysCountIsZero = Expression.Equal(Expression.MakeMemberAccess(IgnoreKeys, typeof(List<string>).GetProperty("Count")), Expression.Constant(0));
 
-        //- handler.option.initialReadState(Enum)
-        internal static readonly MemberExpression InitialReadState = Expression.MakeMemberAccess(JOptionArg, JsonSerializerOption._JsonCharacterRead);
+        //- handler.option.jsonCharacterRead(Enum)
+        internal static readonly MemberExpression JsonCharacterRead = Expression.MakeMemberAccess(JOptionArg, JsonSerializerOption._JsonCharacterRead);
 
         //- handler.option.isEnumNum(bool)
         internal static readonly MemberExpression IsEnumNum = Expression.MakeMemberAccess(JOptionArg, JsonSerializerOption._IsEnumNum);

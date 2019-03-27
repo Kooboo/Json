@@ -8,7 +8,6 @@ namespace KoobooJson.Benchmark
 {
     public class KoobooJson : Base, IJson
     {
-        static JsonSerializerOption ss = new Kooboo.Json.JsonSerializerOption() { DatetimeFormat = Kooboo.Json.DatetimeFormatEnum.Microsoft };
         public override string ToJson<T>(T obj)
         {
             return Kooboo.Json.JsonSerializer.ToJson(obj);

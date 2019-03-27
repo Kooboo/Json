@@ -81,32 +81,29 @@ namespace Kooboo.Json.Test
             Assert.IsTrue(JsonValidator.IsValid(json));
             Assert.AreEqual("\"normal text\"", json);
 
-            //%x20 /              ; Space
-            json = JsonSerializer.ToJson("  normal text  ");
+            //%x20              ; Space
+            json = JsonSerializer.ToJson("normal text\u0020");
             Assert.IsTrue(JsonValidator.IsValid(json));
-            Assert.AreEqual("\"  normal text  \"", json);
+            Assert.AreEqual("\"normal text \"", json);
 
-            //%x09 /              ; Horizontal tab
-            json = JsonSerializer.ToJson("  normal text ");
+            //%x09              ; Horizontal tab
+            json = JsonSerializer.ToJson("normal text\u0009");
             Assert.IsTrue(JsonValidator.IsValid(json));
-            Assert.AreEqual("\"  normal text \"", json);
+            Assert.AreEqual("\"normal text\\t\"", json);
 
-            //%x0A /              ; Line feed or New line
-            json = JsonSerializer.ToJson(@"
-            normal text
-            ");
+            //%x0A              ; Line feed or New line
+            json = JsonSerializer.ToJson("normal text\u000a");
             Assert.IsTrue(JsonValidator.IsValid(json));
-            Assert.AreEqual("\"\\r\\n            normal text\\r\\n            \"", json);
+            Assert.AreEqual("\"normal text\\n\"", json);
 
-            //%x0D )              ; Carriage return
-            json = JsonSerializer.ToJson(@"
-normal text");
+            //%x0D              ; Carriage return
+            json = JsonSerializer.ToJson("\u000dnormal text");
             Assert.IsTrue(JsonValidator.IsValid(json));
-            Assert.AreEqual("\"\\r\\nnormal text\"", json);
+            Assert.AreEqual("\"\\rnormal text\"", json);
         }
 
         //begin-array     = ws % x5B ws  ;[left square bracket
-        //    end-array       = ws %x5D ws; ] right square bracket
+        //end-array       = ws %x5D ws; ] right square bracket
         [TestMethod]
         public void Array_should_be_correct_format()
         {

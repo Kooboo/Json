@@ -64,15 +64,15 @@ namespace Kooboo.Json.Serializer
 						 append("\":")
 				   else
 					  {
-                        .If (($handler.Option).IsFirstLower == True) {
-                            .Call ($handler.Writer).Append(""ns":")
-                        } .Else {
-                            .If (($handler.Option).IsFirstUpper == True) {
-                                .Call ($handler.Writer).Append(""Ns":")
-                            } .Else {
-                                .Call ($handler.Writer).Append(""ns":")
-                            }
-                        }
+                          switch(JsonCharacterRead)
+                          {
+                               case None:
+                                    AppendKey()
+                               case InitialUpper:
+                                    ..
+                               case InitialLower:
+                                    ..
+                          }
 					  }
                     };
                  
@@ -84,7 +84,7 @@ namespace Kooboo.Json.Serializer
                         ),
                        ExpressionMembers.Append("\":")
                         ),
-                    Expression.Switch(typeof(void), ExpressionMembers.InitialReadState, null, null,
+                    Expression.Switch(typeof(void), ExpressionMembers.JsonCharacterRead, null, null,
                         Expression.SwitchCase(ExpressionMembers.AppendKey(item.Key), Expression.Constant(JsonCharacterReadStateEnum.None, typeof(JsonCharacterReadStateEnum))),
                         Expression.SwitchCase(ExpressionMembers.AppendKey(upperName), Expression.Constant(JsonCharacterReadStateEnum.InitialUpper, typeof(JsonCharacterReadStateEnum))),
                         Expression.SwitchCase(ExpressionMembers.AppendKey(lowerName), Expression.Constant(JsonCharacterReadStateEnum.InitialLower, typeof(JsonCharacterReadStateEnum)))

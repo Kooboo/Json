@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Kooboo.Json\Feature.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Jil" Version="2.17.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />

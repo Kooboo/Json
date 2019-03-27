@@ -391,7 +391,7 @@ JsonSerializerOption.GlobalValueFormat=(value,type,handler,isValueFormat)=>
 	 {
 		 isValueFormat=true;
 		 if(value==null)
-				  return "null";
+			      return "null";
 			   else
 			      return ConvertToBase64((byte[])value);
 	 }
