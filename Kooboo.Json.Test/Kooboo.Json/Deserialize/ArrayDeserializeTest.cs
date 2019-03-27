@@ -194,7 +194,7 @@ namespace Kooboo.Json.Test
             Assert.AreEqual(1234, a[1].A);
             Assert.AreEqual(null, a[2]);
         }
-      
+
         [TestMethod]
         public void AnonymousObject_array_deserialize_should_be_correct()
         {

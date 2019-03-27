@@ -59,8 +59,9 @@ namespace Kooboo.Json.Serializer
 
                 /*
                   if(option.keyformat!=null)
+                         $handler.Writer.Append("\"");
 						 $handler.Writer.Append(option.keyformat.invoke(string));
-						 append(":")
+						 append("\":")
 				   else
 					  {
                         .If (($handler.Option).IsFirstLower == True) {
@@ -78,9 +79,10 @@ namespace Kooboo.Json.Serializer
                  */
                 Expression writeKey = Expression.IfThenElse(Expression.NotEqual(ExpressionMembers.GlobalKeyFormat, Expression.Constant(null, JsonSerializerOption._GlobalKeyFormat.FieldType)),
                     Expression.Block(
+                        ExpressionMembers.Append("\""),
                         Expression.Call(ExpressionMembers.SbArg, typeof(StringBuilder).GetMethod("Append", new[] { typeof(string) }), Expression.Call(ExpressionMembers.GlobalKeyFormat, JsonSerializerOption._GlobalKeyFormatInvoke, Expression.Constant(item.Key), Expression.Constant(type, typeof(Type)), ExpressionMembers.HandlerArg)
                         ),
-                       ExpressionMembers.Append(":")
+                       ExpressionMembers.Append("\":")
                         ),
                     Expression.Switch(typeof(void), ExpressionMembers.InitialReadState, null, null,
                         Expression.SwitchCase(ExpressionMembers.AppendKey(item.Key), Expression.Constant(JsonCharacterReadStateEnum.None, typeof(JsonCharacterReadStateEnum))),

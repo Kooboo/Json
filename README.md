@@ -366,18 +366,18 @@ public noArgs => private noArgs => public Args => private Args, 这其中, 会�
      {
          isValueFormat=true;
          if(value==null)
-         return "null";
+             return "null";
          else
-         return ConvertToBase64((byte[])value);
+             return ConvertToBase64((byte[])value);
      }
 
     public override object ReadValueFormat(string value,Type type, JsonDeserializeHandler handler, out bool isValueFormat)
     {
         isValueFormat=true;
         if(value=="null")
-        return null;
+            return null;
         else
-        return Base64Convert(value);
+            return Base64Convert(value);
     }
 }
 ```
@@ -423,8 +423,9 @@ JsonSerializerOption.GlobalKeyFormat=(key,parentType,handler)=>
 {
 	if(parentType==typeof(R01_User))
 	{
-		return key.SubString(4);
+		return key.Substring(4);
 	}
+	return key;
 }
 ```
 这样,出来的json是这样的：{\"Name\":\"\",\"Age\":\"\"}
@@ -437,5 +438,6 @@ JsonDeserializeOption.GlobalKeyFormat=(key,parentType)=>
 	{
 		return "R01_"+key;
 	}
+	return key;
 }
 ```
