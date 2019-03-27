@@ -159,9 +159,16 @@ case 5:
 
 ### 三. 功能介绍
 KoobooJson当前仅支持3个API调用
+
+```
 string Kooboo.Json.ToJson<T>(T value, JsonSerializerOption option=null)
-T ToObject<T>(string json, JsonDeserializeOption option=null)
-T ToObject(string json, Type type, JsonDeserializeOption option=null)
+
+T Kooboo.Json.ToObject<T>(string json, JsonDeserializeOption option=null)
+
+T Kooboo.Json.ToObject(string json, Type type, JsonDeserializeOption option=null)
+```
+
+
 
 **忽略注释**
 
