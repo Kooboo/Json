@@ -161,11 +161,11 @@ case 5:
 KoobooJson当前仅支持3个API调用
 
 ```
-string Kooboo.Json.ToJson<T>(T value, JsonSerializerOption option=null)
+string Kooboo.Json.JsonSerializer.ToJson<T>(T value, JsonSerializerOption option=null)
 
-T Kooboo.Json.ToObject<T>(string json, JsonDeserializeOption option=null)
+T Kooboo.Json.JsonSerializer.ToObject<T>(string json, JsonDeserializeOption option=null)
 
-T Kooboo.Json.ToObject(string json, Type type, JsonDeserializeOption option=null)
+object Kooboo.Json.JsonSerializer.ToObject(string json, Type type, JsonDeserializeOption option=null)
 ```
 
 
