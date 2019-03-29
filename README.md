@@ -258,11 +258,13 @@ class A
 
 
 **Dictionary的Key格式**
+
 在Json规范中,键值对的键必须是字符串类型,在KoobooJson中,对Key的类型允许所有基元类型(Boolean, Byte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, IntPtr, UIntPtr, Char, Double, and Single)和String,以及Datetime,GUID,Enum,共18种支持的类型
 
 
 
 **JObject和JArray**
+
 反序列化时,对Object的类型解析,最终将会产生5种结果: Bool,数值(long,ulong,double),String,JArray,JObject
 其中,JArray代表着数组,它拥有List<object>的所有特性.
 JObject代表着键值对,它拥有Dictionary<string,object>的所有特性.
