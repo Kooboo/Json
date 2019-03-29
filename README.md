@@ -158,7 +158,7 @@ case 5:
 因为是指针操作, KoobooJson在反序列化环节几乎不需要去维护一个char池来存放下一个需要读取的json结构片段.
 
 ### 三. 功能介绍
-KoobooJson当前仅支持3个API调用
+KoobooJson当前仅支持3个API调用,后续将增加对流的API调用
 
 ```
 string Kooboo.Json.JsonSerializer.ToJson<T>(T value, JsonSerializerOption option=null)
@@ -257,6 +257,38 @@ class A
 
 
 
+**Dictionary的Key格式**
+在Json规范中,键值对的键必须是字符串类型,在KoobooJson中,对Key的类型允许所有基元类型(Boolean, Byte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, IntPtr, UIntPtr, Char, Double, and Single)和String,以及Datetime,GUID,Enum,共18种支持的类型
+
+
+
+**JObject和JArray**
+反序列化时,对Object的类型解析,最终将会产生5种结果: Bool,数值(long,ulong,double),String,JArray,JObject
+其中,JArray代表着数组,它拥有List<object>的所有特性.
+JObject代表着键值对,它拥有Dictionary<string,object>的所有特性.
+
+
+
+**忽略默认值元素**
+
+```
+[IgnoreDefaultValue]
+class User
+{
+    public int? Num { get; set; }
+
+    public int Age { get; set; }
+
+    public string Name { get; set; }
+
+}
+var json = JsonSerializer.ToJson(new User());
+json=> {}
+```
+如果你想在序列化时,忽略默认值的元素,那么可以对这个类型标记[IgnoreDefaultValue]特性,也可以标记在属性或者字段上
+
+
+
 **忽略序列化元素**
 
 ```
@@ -330,6 +362,7 @@ json => \/Date(628318530718)\/
  json => {\"R01_Name\":0}
 ```
 当元素被标记[Alias]后,KoobooJson无论序列化还是反序列化都会按照Alias来进行解析
+
 
 
 **反序列化时指定构造函数**
