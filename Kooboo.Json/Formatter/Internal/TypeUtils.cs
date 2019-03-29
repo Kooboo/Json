@@ -355,5 +355,13 @@ namespace Kooboo.Json
                 return true;
             return false;
         }
+
+
+        internal static object GetDefaultValue(this Type type)
+        {
+            if (type.IsValueType)
+                return Activator.CreateInstance(type);
+            return null;
+        }
     }
 }

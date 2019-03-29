@@ -7,7 +7,7 @@ using System.Text;
 namespace Kooboo.Json.Serializer
 {
     [ExpressionBuildType(SerializerBuildTypeEnum.KeyValueObject)]
-    internal class KeyValueObjectBuild : ExpressionJsonFormatter 
+    internal class KeyValueObjectBuild : ExpressionJsonFormatter
     {
         internal static Expression Build(Type type, ParameterExpression instanceArg)
         {
@@ -15,7 +15,7 @@ namespace Kooboo.Json.Serializer
 
             if (!type.IsValueType)
             {
-                ConditionalExpression ifParaIsNullAppendNull = Expression.IfThen(Expression.Equal(instanceArg, Expression.Constant(null,type)),
+                ConditionalExpression ifParaIsNullAppendNull = Expression.IfThen(Expression.Equal(instanceArg, Expression.Constant(null, type)),
                     Expression.Block(
                         ExpressionMembers.Append("null"),
                        Expression.Return(ExpressionMembers.ReturnLable)
@@ -30,6 +30,7 @@ namespace Kooboo.Json.Serializer
             methodCall.Add(ExpressionMembers.WriteLeft);
 
             var elements = type.GetModelMembers(ReadMemberStateEnum.CanRead);
+            bool hasIgnoreDefaultValueAttribute = false;
             for (int i = 0; i < elements.Count; i++)
             {
                 var item = elements[i];
@@ -37,6 +38,13 @@ namespace Kooboo.Json.Serializer
                 //valueformat
                 ValueFormatAttribute valueformat = item.Value.MemberInfo.GetCustomAttribute<ValueFormatAttribute>() ??
                    item.Value.MemberInfo.DeclaringType.GetCustomAttribute<ValueFormatAttribute>();
+
+                //IgnoreDefaultValue
+                IgnoreDefaultValueAttribute ignoreDefaultValue = item.Value.MemberInfo.GetCustomAttribute<IgnoreDefaultValueAttribute>() ??
+                   item.Value.MemberInfo.DeclaringType.GetCustomAttribute<IgnoreDefaultValueAttribute>();
+
+                if (ignoreDefaultValue != null)
+                    hasIgnoreDefaultValueAttribute = true;
 
                 //if (!(m.Name == null && handler.option.IsIgnoreNull))//0
                 MemberExpression mName = Expression.MakeMemberAccess(instanceArg, item.Value.MemberInfo);
@@ -46,7 +54,7 @@ namespace Kooboo.Json.Serializer
                 string upperName = item.Key.Substring(0, 1).ToUpper() + item.Key.Substring(1);
 
                 /*
-                 ignoreKeys == null || (ignoreKeys.count() == 0 || ignoreKeys.Contains(name)==false
+                 ignoreKeys == null || ignoreKeys.count() == 0 || ignoreKeys.Contains(name)==false
                  */
                 BinaryExpression ignoreKeysJudge = Expression.OrElse(
                     ExpressionMembers.IgnoreKeysIsNull,
@@ -56,6 +64,12 @@ namespace Kooboo.Json.Serializer
                             Expression.Call(ExpressionMembers.IgnoreKeys, typeof(List<string>).GetMethod("Contains"), Expression.Constant(item.Key))
                             , Expression.Constant(false))
                             ));
+
+                /*
+                 (ignoreKeys == null || ignoreKeys.count() == 0 || ignoreKeys.Contains(name)==false) && ( m!=default(m) )
+                 */
+                if (ignoreDefaultValue != null)
+                    ignoreKeysJudge = Expression.AndAlso(ignoreKeysJudge, Expression.NotEqual(mName, Expression.Constant(item.Value.Type.GetDefaultValue(), item.Value.Type)));
 
                 /*
                   if(option.keyformat!=null)
@@ -104,7 +118,7 @@ namespace Kooboo.Json.Serializer
                 {
                     writeValue = Expression.Block(
                            Expression.NotEqual(ExpressionMembers.GlobalValueFormat, Expression.Constant(null, JsonSerializerOption._GlobalValueFormat.FieldType)),
-                            Expression.Assign(ExpressionMembers.AfterValueFormat, Expression.Call(Expression.Constant(valueformat, typeof(ValueFormatAttribute)), ValueFormatAttribute._WriteValueFormat, Expression.Convert(mName, typeof(object)),Expression.Constant(item.Value.Type,typeof(Type)), ExpressionMembers.HandlerArg, ExpressionMembers.IsValueFormat)),
+                            Expression.Assign(ExpressionMembers.AfterValueFormat, Expression.Call(Expression.Constant(valueformat, typeof(ValueFormatAttribute)), ValueFormatAttribute._WriteValueFormat, Expression.Convert(mName, typeof(object)), Expression.Constant(item.Value.Type, typeof(Type)), ExpressionMembers.HandlerArg, ExpressionMembers.IsValueFormat)),
                             Expression.IfThenElse(Expression.IsTrue(ExpressionMembers.IsValueFormat), ExpressionMembers.Append(ExpressionMembers.AfterValueFormat), ExpressionMembers.GetMethodCall(item.Value.Type, mName))
                             );
                 }
@@ -126,7 +140,7 @@ namespace Kooboo.Json.Serializer
                     writeValue = Expression.IfThenElse(
                         Expression.NotEqual(ExpressionMembers.GlobalValueFormat, Expression.Constant(null, JsonSerializerOption._GlobalValueFormat.FieldType)),
                         Expression.Block(
-                            Expression.Assign(ExpressionMembers.AfterValueFormat, Expression.Call(ExpressionMembers.GlobalValueFormat, JsonSerializerOption._GlobalValueFormatInvoke, Expression.Convert(mName, typeof(object)),Expression.Constant(item.Value.Type,typeof(Type)), ExpressionMembers.HandlerArg, ExpressionMembers.IsValueFormat)),
+                            Expression.Assign(ExpressionMembers.AfterValueFormat, Expression.Call(ExpressionMembers.GlobalValueFormat, JsonSerializerOption._GlobalValueFormatInvoke, Expression.Convert(mName, typeof(object)), Expression.Constant(item.Value.Type, typeof(Type)), ExpressionMembers.HandlerArg, ExpressionMembers.IsValueFormat)),
                             Expression.IfThenElse(Expression.IsTrue(ExpressionMembers.IsValueFormat), ExpressionMembers.Append(ExpressionMembers.AfterValueFormat), ExpressionMembers.GetMethodCall(item.Value.Type, mName))
                             ),
                         ExpressionMembers.GetMethodCall(item.Value.Type, mName)
@@ -147,12 +161,17 @@ namespace Kooboo.Json.Serializer
                 }
                 // 
                 trunk = Expression.IfThen(ignoreKeysJudge, trunk);//忽略key
-           
+
                 methodCall.Add(trunk);
 
             }
 
-            methodCall.Add(ExpressionMembers.IgnoreValueNullIsTrueOrIgnoreKeysNotEqureNullRemoveLastComma);
+            //  //if ( ignoreValueNull == true || ignoreKeys!=null ) ==> RemoveLastComma()
+            var IgnoreValueNullIsTrueOrIgnoreKeysNotEqureNullRemoveLastComma = Expression.IfThen(
+                    Expression.OrElse(ExpressionMembers.IgnoreValueNullIsTrue, ExpressionMembers.IgnoreKeysIsNotNull),
+                    ExpressionMembers.RemoveLastComma()
+                 );
+            methodCall.Add(hasIgnoreDefaultValueAttribute? (Expression)ExpressionMembers.RemoveLastComma():IgnoreValueNullIsTrueOrIgnoreKeysNotEqureNullRemoveLastComma);
             methodCall.Add(ExpressionMembers.IsReferenceLoopHandlingIsRemoveDeleteComma);
             methodCall.Add(ExpressionMembers.WriteRight);
             methodCall.Add(ExpressionMembers.IsReferenceLoopHandlingIsNoneSerializeStacksArgPop);

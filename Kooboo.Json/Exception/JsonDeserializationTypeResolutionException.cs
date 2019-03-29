@@ -36,12 +36,12 @@ namespace Kooboo.Json
         }
 
         internal JsonDeserializationTypeResolutionException(JsonReader reader, Type t) : base(
-            $"Json deserialization {t.Name} type parsing error ,An error occurred on symbol {reader.Length - reader.Remaining} , it's {reader.Json[reader.Length - reader.Remaining]}")
+            $"Json deserialization {t.Name} type parsing error ,An error occurred on symbol {reader.Length - reader.Remaining-1} , it's {reader.Json[reader.Length - reader.Remaining-1]}")
         {
         }
 
         internal JsonDeserializationTypeResolutionException(JsonReader reader, Type t, string msg) : base(
-            $"Json deserialization {t.Name} type parsing error ,An error occurred on symbol {reader.Length - reader.Remaining} , {msg}")
+            $"Json deserialization {t.Name} type parsing error ,An error occurred on symbol {reader.Length - reader.Remaining-1} , {msg}")
         {
         }
 

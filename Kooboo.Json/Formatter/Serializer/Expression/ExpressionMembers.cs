@@ -63,11 +63,8 @@ namespace Kooboo.Json.Serializer
         //- handler.commaIndexLists
         internal static readonly MemberExpression ListCommaIndexs = Expression.MakeMemberAccess(HandlerArg, JsonSerializerHandler._CommaIndexLists);
 
-        //if ( ignoreValueNull == true || ignoreKeys!=null ) ==> RemoveLastComma()
-        internal static readonly ConditionalExpression IgnoreValueNullIsTrueOrIgnoreKeysNotEqureNullRemoveLastComma = Expression.IfThen(
-               Expression.OrElse(IgnoreValueNullIsTrue, IgnoreKeysIsNotNull),
-                RemoveLastComma()
-            );
+      
+        
 
         //if ( referenceLoopHandling == Enum.Remove ) ==> DeleteComma()
         internal static readonly ConditionalExpression IsReferenceLoopHandlingIsRemoveDeleteComma = Expression.IfThen(

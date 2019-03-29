@@ -22,6 +22,12 @@
                 Marked elements are ignored when serialized or deserialized
             </summary>
         </member>
+        <member name="T:Kooboo.Json.IgnoreDefaultValueAttribute">
+            <summary>
+                当被标记元素的值为默认值时,序列化时将忽略其元素
+                When the value of the tagged element is the default, its element is ignored when serialized
+            </summary>
+        </member>
         <member name="T:Kooboo.Json.JsonDeserializeCtorAttribute">
             <summary>
                 对Model进行Json反序列化时指定一个构造函数
