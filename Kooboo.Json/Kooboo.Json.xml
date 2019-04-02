@@ -415,5 +415,23 @@
             <param name="option">Json Deserialize Option</param>
             <returns>Object</returns>
         </member>
+        <member name="M:Kooboo.Json.JsonSerializer.ToObject``1(System.IO.StreamReader,Kooboo.Json.JsonDeserializeOption)">
+            <summary>
+                Deserializes JSON from the StreamReader
+            </summary>
+            <typeparam name="T">Types converted</typeparam>
+            <param name="streamReader">Stream</param>
+            <param name="option">Json Deserialize Option</param>
+            <returns>Object</returns>
+        </member>
+        <member name="M:Kooboo.Json.JsonSerializer.ToObject(System.IO.StreamReader,System.Type,Kooboo.Json.JsonDeserializeOption)">
+            <summary>
+                Deserializes JSON from the StreamReader
+            </summary>
+            <param name="streamReader">Stream</param>
+            <param name="type">Types converted</param>
+            <param name="option">Json Deserialize Option</param>
+            <returns>Object</returns>
+        </member>
     </members>
 </doc>

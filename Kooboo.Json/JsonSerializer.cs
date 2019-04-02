@@ -61,7 +61,14 @@ namespace Kooboo.Json
             return Deserialize.DeserializeObjectJump.GetThreadSafetyJumpFunc(json, type, handler);
         }
 
-        public  static T ToObject<T>(StreamReader streamReader, JsonDeserializeOption option = null)
+        /// <summary>
+        ///     Deserializes JSON from the StreamReader
+        /// </summary>
+        /// <typeparam name="T">Types converted</typeparam>
+        /// <param name="streamReader">Stream</param>
+        /// <param name="option">Json Deserialize Option</param>
+        /// <returns>Object</returns>
+        public static T ToObject<T>(StreamReader streamReader, JsonDeserializeOption option = null)
         {
             var handler = new JsonDeserializeHandler
             {
@@ -70,6 +77,13 @@ namespace Kooboo.Json
             return Deserialize.ResolveProvider<T>.Convert(streamReader, handler);
         }
 
+        /// <summary>
+        ///     Deserializes JSON from the StreamReader
+        /// </summary>
+        /// <param name="streamReader">Stream</param>
+        /// <param name="type">Types converted</param>
+        /// <param name="option">Json Deserialize Option</param>
+        /// <returns>Object</returns>
         public static object ToObject(StreamReader streamReader, Type type, JsonDeserializeOption option = null)
         {
             var handler = new JsonDeserializeHandler
