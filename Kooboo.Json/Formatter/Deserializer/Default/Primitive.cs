@@ -14,7 +14,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static int ReadInt(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static int ReadInt(JsonReader reader, JsonDeserializeHandler handler)
         {
             int c = reader.BeforAnnotation();
 
@@ -78,7 +78,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static uint ReadUInt(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static uint ReadUInt(JsonReader reader, JsonDeserializeHandler handler)
         {
             int c = reader.BeforAnnotation();
 
@@ -136,7 +136,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static long ReadLong(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static long ReadLong(JsonReader reader, JsonDeserializeHandler handler)
         {
             int c = reader.BeforAnnotation();
 
@@ -200,7 +200,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static ulong ReadULong(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static ulong ReadULong(JsonReader reader, JsonDeserializeHandler handler)
         {
             uint c = reader.BeforAnnotation();
 
@@ -269,7 +269,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string ReadEscapeString(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static string ReadEscapeString(JsonReader reader, JsonDeserializeHandler handler)
         {
             var c = reader.BeforAnnotation();
             if (c == '"')
@@ -284,7 +284,13 @@ namespace Kooboo.Json.Deserialize
                     if (c == '"')//end
                     {
                         if (length > 0)
-                            charBufferSb.Append(reader.Json, start, length);
+                        {
+                            if (reader.Json != null)
+                                charBufferSb.Append(reader.Json, start, length);
+                            else
+                                charBufferSb.Append(reader.Buffer, start, length);
+                        }
+
                         return charBufferSb.ToString(sbStart, charBufferSb.Length - sbStart);
                     }
 
@@ -295,7 +301,10 @@ namespace Kooboo.Json.Deserialize
                     }
                     if (length > 0)
                     {
-                        charBufferSb.Append(reader.Json, start, length);
+                        if (reader.Json != null)
+                            charBufferSb.Append(reader.Json, start, length);
+                        else
+                            charBufferSb.Append(reader.Buffer, start, length);
                         start += length;
                         length = 0;
                     }
@@ -350,7 +359,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static char ReadEscapeChar(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static char ReadEscapeChar(JsonReader reader, JsonDeserializeHandler handler)
         {
             var c = reader.BeforAnnotation();
             if (c == '"')
@@ -392,55 +401,55 @@ namespace Kooboo.Json.Deserialize
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
-        internal static IntPtr ReadIntPtr(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static IntPtr ReadIntPtr(JsonReader reader, JsonDeserializeHandler handler)
         {
-            return new IntPtr(ReadLong(ref reader, handler));
+            return new IntPtr(ReadLong(reader, handler));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
-        internal static UIntPtr ReadUIntPtr(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static UIntPtr ReadUIntPtr(JsonReader reader, JsonDeserializeHandler handler)
         {
-            return new UIntPtr(ReadULong(ref reader, handler));
+            return new UIntPtr(ReadULong(reader, handler));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
-        internal static byte ReadByte(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static byte ReadByte(JsonReader reader, JsonDeserializeHandler handler)
         {
             checked
             {
-                return (byte)ReadInt(ref reader, handler);
+                return (byte)ReadInt(reader, handler);
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
-        internal static sbyte ReadSByte(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static sbyte ReadSByte(JsonReader reader, JsonDeserializeHandler handler)
         {
             checked
             {
-                return (sbyte)ReadInt(ref reader, handler);
+                return (sbyte)ReadInt(reader, handler);
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
-        internal static short ReadShort(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static short ReadShort(JsonReader reader, JsonDeserializeHandler handler)
         {
             checked
             {
-                return (short)ReadInt(ref reader, handler);
+                return (short)ReadInt(reader, handler);
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
-        internal static ushort ReadUShort(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static ushort ReadUShort(JsonReader reader, JsonDeserializeHandler handler)
         {
             checked
             {
-                return (ushort)ReadInt(ref reader, handler);
+                return (ushort)ReadInt(reader, handler);
             }
         }
 
@@ -463,7 +472,7 @@ namespace Kooboo.Json.Deserialize
         };
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
-        internal static unsafe double ReadDouble(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static unsafe double ReadDouble(JsonReader reader, JsonDeserializeHandler handler)
         {
             char c = reader.BeforAnnotation();
             if (c == '\"')
@@ -669,7 +678,7 @@ namespace Kooboo.Json.Deserialize
             };
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
-        internal static unsafe decimal ReadDecimal(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static unsafe decimal ReadDecimal(JsonReader reader, JsonDeserializeHandler handler)
         {
             reader.BeforAnnotation();
             reader.RollbackChar();
@@ -862,7 +871,7 @@ namespace Kooboo.Json.Deserialize
         };
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
-        internal static unsafe float ReadFloat(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static unsafe float ReadFloat(JsonReader reader, JsonDeserializeHandler handler)
         {
             char c = reader.BeforAnnotation();
             if (c == '\"')
@@ -1050,7 +1059,7 @@ namespace Kooboo.Json.Deserialize
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
-        internal static bool ReadBool(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static bool ReadBool(JsonReader reader, JsonDeserializeHandler handler)
         {
             char c = reader.BeforAnnotation();
             if (c == 'f' && reader.StrCompair("alse"))
@@ -1067,7 +1076,7 @@ namespace Kooboo.Json.Deserialize
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
-        internal static unsafe object ReadObject(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static unsafe object ReadObject(JsonReader reader, JsonDeserializeHandler handler)
         {
             char c = reader.BeforAnnotation();
             switch (c)
@@ -1107,7 +1116,7 @@ namespace Kooboo.Json.Deserialize
                             {
                                 reader.Remaining += idx;
                                 reader.Pointer -= idx;
-                                return ReadDouble(ref reader, handler);
+                                return ReadDouble(reader, handler);
                                 //double
                             }
                             else if (c < '0' || c > '9')
@@ -1122,11 +1131,11 @@ namespace Kooboo.Json.Deserialize
                         if (idx <= 19)
                         {
                             //long
-                            return ReadLong(ref reader, handler);
+                            return ReadLong(reader, handler);
                         }
                         else if (idx == 20)
                         {
-                            double d = ReadDouble(ref reader, handler);
+                            double d = ReadDouble(reader, handler);
                             if (negative)
                             {
                                 if (d >= long.MinValue)
@@ -1143,7 +1152,7 @@ namespace Kooboo.Json.Deserialize
                         }
                         else
                         {
-                            return ReadDouble(ref reader, handler);
+                            return ReadDouble(reader, handler);
                             //double
                         }
                     }
@@ -1155,7 +1164,7 @@ namespace Kooboo.Json.Deserialize
                         int moveNext = 1;
                         while (moveNext-- > 0)
                         {
-                            list.Add(ReadObject(ref reader, handler));
+                            list.Add(ReadObject(reader, handler));
                             if (reader.ReadBoolComma())
                                 moveNext++;
                         }
@@ -1170,9 +1179,9 @@ namespace Kooboo.Json.Deserialize
                         int moveNext = 1;
                         while (moveNext-- > 0)
                         {
-                            var key = ReadEscapeString(ref reader, handler);
+                            var key = ReadEscapeString(reader, handler);
                             reader.ReadColon();
-                            var value = ReadObject(ref reader, handler);
+                            var value = ReadObject(reader, handler);
                             dictionary.Add(key, value);
                             if (reader.ReadBoolComma())
                                 moveNext++;
@@ -1183,7 +1192,7 @@ namespace Kooboo.Json.Deserialize
                 case '"':
                     {
                         reader.RollbackChar();
-                        return ReadEscapeString(ref reader, handler);
+                        return ReadEscapeString(reader, handler);
                     }
             }
             throw new JsonDeserializationTypeResolutionException(reader, typeof(object));

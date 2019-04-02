@@ -7,7 +7,7 @@ namespace Kooboo.Json.Deserialize
     {
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal unsafe static DateTime ReadDateTime(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal unsafe static DateTime ReadDateTime(JsonReader reader, JsonDeserializeHandler handler)
         {
             reader.ReadQuotes();
             char* ip = reader.Pointer;
@@ -18,27 +18,27 @@ namespace Kooboo.Json.Deserialize
                 //http://en.wikipedia.org/wiki/ISO_8601
                 //\"2019-02-11T18:42:04.0068385Z\"  
                 //\"2019-02-11T18:42:04.0068385+08:00\" 
-                return ReadISO8601Date(ref reader);
+                return ReadISO8601Date(reader);
             }
             else if (c == '\\')
             {
                 // "\/Date(628318530718)\/" 
-                return ReadMicrosoftDate(ref reader, handler);
+                return ReadMicrosoftDate(reader, handler);
             }
             else
             {
                 //Mon, 11 Feb 2019 18:39:32 GMT
-                return ReadRFC1123DateTime(ref reader);
+                return ReadRFC1123DateTime(reader);
             }
 
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static unsafe DateTime ReadMicrosoftDate(ref JsonReader reader, JsonDeserializeHandler handler)
+        static unsafe DateTime ReadMicrosoftDate(JsonReader reader, JsonDeserializeHandler handler)
         {
             if (!reader.StrCompair("\\/Date("))
                 goto Throw;
 
-            long l = PrimitiveResolve.ReadLong(ref reader, handler);
+            long l = PrimitiveResolve.ReadLong(reader, handler);
             DateTime dt = new DateTime(l * 10000L + 621355968000000000L);
 
             if (reader.StrCompair(")\\/\""))
@@ -48,7 +48,7 @@ namespace Kooboo.Json.Deserialize
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static unsafe DateTime ReadISO8601Date(ref JsonReader reader)
+        static unsafe DateTime ReadISO8601Date(JsonReader reader)
         {
             // ISO8601 / RFC3339 (the internet "profile"* of ISO8601) is a plague
             //   See: http://en.wikipedia.org/wiki/ISO_8601 &
@@ -957,9 +957,9 @@ namespace Kooboo.Json.Deserialize
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static DateTime ReadRFC1123DateTime(ref JsonReader reader)
+        static DateTime ReadRFC1123DateTime(JsonReader reader)
         {
-            DayOfWeek dayOfWeek = ReadRFC1123DayOfWeek(ref reader);
+            DayOfWeek dayOfWeek = ReadRFC1123DayOfWeek(reader);
 
             if (!reader.StrCompair(", "))
                 throw new JsonDeserializationTypeResolutionException(typeof(DateTime));
@@ -980,7 +980,7 @@ namespace Kooboo.Json.Deserialize
             if (c != ' ')
                 throw new JsonDeserializationTypeResolutionException(typeof(DateTime));
 
-            byte month = ReadRFC1123Month(ref reader);
+            byte month = ReadRFC1123Month(reader);
 
             c = reader.GetChar();
             if (c != ' ')
@@ -1055,7 +1055,7 @@ namespace Kooboo.Json.Deserialize
 
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static DayOfWeek ReadRFC1123DayOfWeek(ref JsonReader reader)
+        private static DayOfWeek ReadRFC1123DayOfWeek(JsonReader reader)
         {
             char c = reader.GetChar();
             // Mon
@@ -1100,7 +1100,7 @@ namespace Kooboo.Json.Deserialize
             throw new JsonWrongCharacterException(reader, "Kooboo.Json is not defined by the Datetime format");
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static byte ReadRFC1123Month(ref JsonReader reader)
+        private static byte ReadRFC1123Month(JsonReader reader)
         {
             var c = reader.GetChar();
             if (c == -1)

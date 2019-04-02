@@ -201,7 +201,7 @@ namespace Kooboo.Json.Deserialize
                 var valueFormatAttribute = member.MemberInfo.GetCustomAttribute<ValueFormatAttribute>() ?? member.MemberInfo.DeclaringType.GetCustomAttribute<ValueFormatAttribute>();
                 if (valueFormatAttribute != null)//part
                 {
-                    return (GenerateValueFormatCode(Expression.Constant(valueFormatAttribute, typeof(ValueFormatAttribute)), ValueFormatAttribute._ReadValueFormat, new[] { ExpressionMembers.JsonSubstring,Expression.Constant(member.Type,typeof(Type)), ExpressionMembers.JsonDeserializeHandler, ExpressionMembers.IsValueFormat }, newModel, member));
+                    return (GenerateValueFormatCode(Expression.Constant(valueFormatAttribute, typeof(ValueFormatAttribute)), ValueFormatAttribute._ReadValueFormat, new[] { ExpressionMembers.JsonRemoveQuoteAndSubstring,Expression.Constant(member.Type,typeof(Type)), ExpressionMembers.JsonDeserializeHandler, ExpressionMembers.IsValueFormat }, newModel, member));
                 }
                 else //global
                 {
@@ -212,7 +212,7 @@ namespace Kooboo.Json.Deserialize
                      else
                          model.N=ReadJson();
                      */
-                    return (Expression.IfThenElse(ExpressionMembers.GlobalValueFormatNotEqualNull, GenerateValueFormatCode(ExpressionMembers.GlobalValueFormat, JsonDeserializeOption._GlobalValueFormatInvoke, new[] { ExpressionMembers.JsonSubstring, Expression.Constant(member.Type, typeof(Type)), ExpressionMembers.JsonDeserializeHandler, ExpressionMembers.IsValueFormat }, newModel, member), Expression.Assign(Expression.MakeMemberAccess(newModel, member.MemberInfo), ExpressionMembers.GetMethodCall(member.Type))));
+                    return (Expression.IfThenElse(ExpressionMembers.GlobalValueFormatNotEqualNull, GenerateValueFormatCode(ExpressionMembers.GlobalValueFormat, JsonDeserializeOption._GlobalValueFormatInvoke, new[] { ExpressionMembers.JsonRemoveQuoteAndSubstring, Expression.Constant(member.Type, typeof(Type)), ExpressionMembers.JsonDeserializeHandler, ExpressionMembers.IsValueFormat }, newModel, member), Expression.Assign(Expression.MakeMemberAccess(newModel, member.MemberInfo), ExpressionMembers.GetMethodCall(member.Type))));
                 }
             }
             else

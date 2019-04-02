@@ -388,14 +388,6 @@
                  KoobooJson Serializer
             </summary>
         </member>
-        <member name="M:Kooboo.Json.JsonSerializer.ToJson``1(``0)">
-            <summary>
-                Serialize objects into JSON strings
-            </summary>
-            <typeparam name="T">Value type</typeparam>
-            <param name="value">Value</param>
-            <returns>JSON strings</returns>
-        </member>
         <member name="M:Kooboo.Json.JsonSerializer.ToJson``1(``0,Kooboo.Json.JsonSerializerOption)">
             <summary>
                 Serialize objects into JSON strings
@@ -404,22 +396,6 @@
             <param name="value">Value</param>
             <param name="option">Serialize option</param>
             <returns>JSON strings</returns>
-        </member>
-        <member name="M:Kooboo.Json.JsonSerializer.ToObject``1(System.String)">
-            <summary>
-                Converting Json strings to objects
-            </summary>
-            <typeparam name="T">Types converted</typeparam>
-            <param name="json">Json string</param>
-            <returns>Object</returns>
-        </member>
-        <member name="M:Kooboo.Json.JsonSerializer.ToObject(System.String,System.Type)">
-            <summary>
-                Converting Json strings to objects
-            </summary>
-            <param name="json">Json string</param>
-            <param name="type">Types converted</param>
-            <returns>Object</returns>
         </member>
         <member name="M:Kooboo.Json.JsonSerializer.ToObject``1(System.String,Kooboo.Json.JsonDeserializeOption)">
             <summary>

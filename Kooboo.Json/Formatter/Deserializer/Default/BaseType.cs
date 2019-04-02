@@ -7,7 +7,7 @@ namespace Kooboo.Json.Deserialize
     {
         [FuncLable(FuncType.BaseType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Exception ReadException(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static Exception ReadException(JsonReader reader, JsonDeserializeHandler handler)
         {
             if (reader.ReadNullOrObjLeft())
                 return null;
@@ -40,13 +40,13 @@ namespace Kooboo.Json.Deserialize
                         if (c == 'o' && reader.StrCompair("urce\""))
                         {
                             reader.ReadColon();
-                            source = PrimitiveResolve.ReadEscapeString(ref reader, handler);
+                            source = PrimitiveResolve.ReadEscapeString(reader, handler);
                         }
                         else if (c == 't' && reader.StrCompair("ackTrace\""))
                         {
                             //只读
                             reader.ReadColon();
-                            PrimitiveResolve.ReadEscapeString(ref reader, handler);
+                            PrimitiveResolve.ReadEscapeString(reader, handler);
                         }
                         else
                             throw new Exception();
@@ -56,7 +56,7 @@ namespace Kooboo.Json.Deserialize
                             if (reader.StrCompair("essage\""))
                             {
                                 reader.ReadColon();
-                                message = PrimitiveResolve.ReadEscapeString(ref reader, handler);
+                                message = PrimitiveResolve.ReadEscapeString(reader, handler);
                             }
                             else
                                 throw new Exception();
@@ -67,7 +67,7 @@ namespace Kooboo.Json.Deserialize
                             if ( reader.StrCompair("elpLink\""))
                             {
                                 reader.ReadColon();
-                                helpLink = PrimitiveResolve.ReadEscapeString(ref reader, handler);
+                                helpLink = PrimitiveResolve.ReadEscapeString(reader, handler);
                             }
                             else
                                 throw new Exception();
@@ -90,9 +90,9 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.BaseType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Type ReadType(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static Type ReadType(JsonReader reader, JsonDeserializeHandler handler)
         {
-            var typeName = PrimitiveResolve.ReadEscapeString(ref reader, handler);
+            var typeName = PrimitiveResolve.ReadEscapeString(reader, handler);
             return typeName != null ? Type.GetType(typeName) : null;
         }
     }

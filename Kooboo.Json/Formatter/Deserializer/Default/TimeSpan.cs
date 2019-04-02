@@ -7,7 +7,7 @@ namespace Kooboo.Json.Deserialize
     {
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static unsafe TimeSpan ReadTimeSpan(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static unsafe TimeSpan ReadTimeSpan( JsonReader reader, JsonDeserializeHandler handler)
         {
             /*
              \"P10675199DT2H48M5.4775807S\"  => ISO
@@ -20,9 +20,9 @@ namespace Kooboo.Json.Deserialize
                 c = ip[1];
 
             if (c == 'P')
-                return _ReadISO8601TimeSpan(ref reader);
+                return _ReadISO8601TimeSpan(reader);
             else
-                return ReadMicrosoftTimeSpan(ref reader);
+                return ReadMicrosoftTimeSpan(reader);
         }
 
         static readonly ulong MinTicks = (ulong)-TimeSpan.MinValue.Ticks;
@@ -40,7 +40,7 @@ namespace Kooboo.Json.Deserialize
                 100000000
           };
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static unsafe TimeSpan ReadMicrosoftTimeSpan(ref JsonReader reader)
+        static unsafe TimeSpan ReadMicrosoftTimeSpan(JsonReader reader)
         {
             char* ip = reader.Pointer;
             int start = reader.Remaining;
@@ -166,7 +166,7 @@ namespace Kooboo.Json.Deserialize
                 var ms = fracOfSecond * 1000.0;
                 msInt = (int)ms;
                 if (ms > msInt)
-                    return TimeSpan.Parse(reader.Json.Substring(reader.Json.Length - start, strLen));
+                    return TimeSpan.Parse(reader.SubString(reader.Length - start, strLen));
             }
 
             var ret = new TimeSpan(days, hours, minutes, seconds, msInt);
@@ -179,7 +179,7 @@ namespace Kooboo.Json.Deserialize
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static unsafe TimeSpan _ReadISO8601TimeSpan(ref JsonReader reader)
+        static unsafe TimeSpan _ReadISO8601TimeSpan(JsonReader reader)
         {
             const ulong ticksPerDay = 864000000000;
 

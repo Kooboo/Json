@@ -14,7 +14,7 @@ namespace Kooboo.Json.Deserialize
         //---------Special
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static DataTable ReadDataTable(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static DataTable ReadDataTable(JsonReader reader, JsonDeserializeHandler handler)
         {
             //[{ \"Id\":1 , \"Name\":\"ss\" }]
             if (reader.ReadNullOrArrayLeft())
@@ -29,7 +29,7 @@ namespace Kooboo.Json.Deserialize
                 int move = 1;
                 while (move-- > 0)
                 {
-                    string columnName = PrimitiveResolve.ReadEscapeString(ref reader,handler);
+                    string columnName = PrimitiveResolve.ReadEscapeString(reader,handler);
                     reader.ReadColon();
                     DataColumn column = dt.Columns[columnName];
                     if (column == null)
@@ -38,7 +38,7 @@ namespace Kooboo.Json.Deserialize
                         dt.Columns.Add(column);
                     }
 
-                    object rowValue = PrimitiveResolve.ReadObject(ref reader, handler);
+                    object rowValue = PrimitiveResolve.ReadObject(reader, handler);
                     dr[columnName] = rowValue;
 
                     if (reader.ReadBoolComma())
@@ -58,7 +58,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static DBNull ReadDBNull(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static DBNull ReadDBNull(JsonReader reader, JsonDeserializeHandler handler)
         {
             char c = reader.BeforAnnotation();
             if (c == 'n' && reader.StrCompair("ull"))
@@ -70,7 +70,7 @@ namespace Kooboo.Json.Deserialize
         private static readonly object ObjLock = new object();
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static byte[] ReadBytes(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static byte[] ReadBytes(JsonReader reader, JsonDeserializeHandler handler)
         {
             char c = reader.BeforAnnotation();
             if (c == 'n' && reader.StrCompair("ull"))
@@ -86,18 +86,18 @@ namespace Kooboo.Json.Deserialize
                             byteArray = BuildFactory.Build<byte[]>(DeserializeBuildTypeEnum.Array, typeof(byte[]));
                     }
                 }
-                return byteArray(ref reader, handler);
+                return byteArray(reader, handler);
             }
             else
             {
                 reader.RollbackChar();
-                return Convert.FromBase64String(PrimitiveResolve.ReadEscapeString(ref reader,handler));
+                return Convert.FromBase64String(PrimitiveResolve.ReadEscapeString(reader,handler));
             }
         }
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Guid ReadGuid(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static Guid ReadGuid(JsonReader reader, JsonDeserializeHandler handler)
         {
             var c = reader.BeforAnnotation();
             if (c == '"')
@@ -115,43 +115,43 @@ namespace Kooboo.Json.Deserialize
                     // Ix:   0  1  2  3    4  5    6  7     8  9    10 11 12 13 14 15
                     var asStruct = new GuidStruct
                     {
-                        B03 = ReadGuidByte(ref reader),
-                        B02 = ReadGuidByte(ref reader),
-                        B01 = ReadGuidByte(ref reader),
-                        B00 = ReadGuidByte(ref reader)
+                        B03 = ReadGuidByte(reader),
+                        B02 = ReadGuidByte(reader),
+                        B01 = ReadGuidByte(reader),
+                        B00 = ReadGuidByte(reader)
                     };
 
                     c = reader.GetChar();
                     if (c != '-')
                         throw new JsonWrongCharacterException(reader, "Guid format error");
 
-                    asStruct.B05 = ReadGuidByte(ref reader);
-                    asStruct.B04 = ReadGuidByte(ref reader);
+                    asStruct.B05 = ReadGuidByte(reader);
+                    asStruct.B04 = ReadGuidByte(reader);
 
                     c = reader.GetChar();
                     if (c != '-')
                         throw new JsonWrongCharacterException(reader, "Guid format error");
 
-                    asStruct.B07 = ReadGuidByte(ref reader);
-                    asStruct.B06 = ReadGuidByte(ref reader);
+                    asStruct.B07 = ReadGuidByte(reader);
+                    asStruct.B06 = ReadGuidByte(reader);
 
                     c = reader.GetChar();
                     if (c != '-')
                         throw new JsonWrongCharacterException(reader, "Guid format error");
 
-                    asStruct.B08 = ReadGuidByte(ref reader);
-                    asStruct.B09 = ReadGuidByte(ref reader);
+                    asStruct.B08 = ReadGuidByte(reader);
+                    asStruct.B09 = ReadGuidByte(reader);
 
                     c = reader.GetChar();
                     if (c != '-')
                         throw new JsonWrongCharacterException(reader, "Guid format error");
 
-                    asStruct.B10 = ReadGuidByte(ref reader);
-                    asStruct.B11 = ReadGuidByte(ref reader);
-                    asStruct.B12 = ReadGuidByte(ref reader);
-                    asStruct.B13 = ReadGuidByte(ref reader);
-                    asStruct.B14 = ReadGuidByte(ref reader);
-                    asStruct.B15 = ReadGuidByte(ref reader);
+                    asStruct.B10 = ReadGuidByte(reader);
+                    asStruct.B11 = ReadGuidByte(reader);
+                    asStruct.B12 = ReadGuidByte(reader);
+                    asStruct.B13 = ReadGuidByte(reader);
+                    asStruct.B14 = ReadGuidByte(reader);
+                    asStruct.B15 = ReadGuidByte(reader);
                     if (reader.GetChar() == '"')
                         return asStruct.Value;
                 }
@@ -161,7 +161,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static Uri ReadUri(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static Uri ReadUri(JsonReader reader, JsonDeserializeHandler handler)
         {
             char c = reader.BeforAnnotation();
             if (c == 'n' && reader.StrCompair("ull"))
@@ -169,13 +169,13 @@ namespace Kooboo.Json.Deserialize
             else
             {
                 reader.RollbackChar();
-                return new Uri(PrimitiveResolve.ReadEscapeString(ref reader,handler));
+                return new Uri(PrimitiveResolve.ReadEscapeString(reader,handler));
             }
         }
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static NameValueCollection ReadNameValueCollection(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static NameValueCollection ReadNameValueCollection(JsonReader reader, JsonDeserializeHandler handler)
         {
             if (reader.ReadNullOrObjLeft())
                 return null;
@@ -185,9 +185,9 @@ namespace Kooboo.Json.Deserialize
             int moveNext = 1;
             while (moveNext-- > 0)
             {
-                var key = PrimitiveResolve.ReadEscapeString(ref reader, handler);
+                var key = PrimitiveResolve.ReadEscapeString( reader, handler);
                 reader.ReadColon();
-                var value = PrimitiveResolve.ReadEscapeString(ref reader, handler);
+                var value = PrimitiveResolve.ReadEscapeString(reader, handler);
                 nameValueCollection.Add(key, value);
                 if (reader.ReadBoolComma())
                     moveNext++;
@@ -198,7 +198,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static StringDictionary ReadStringDictionary(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static StringDictionary ReadStringDictionary(JsonReader reader, JsonDeserializeHandler handler)
         {
             if (reader.ReadNullOrObjLeft())
                 return null;
@@ -208,9 +208,9 @@ namespace Kooboo.Json.Deserialize
             int moveNext = 1;
             while (moveNext-- > 0)
             {
-                var key = PrimitiveResolve.ReadEscapeString(ref reader, handler);
+                var key = PrimitiveResolve.ReadEscapeString(reader, handler);
                 reader.ReadColon();
-                var value = PrimitiveResolve.ReadEscapeString(ref reader, handler);
+                var value = PrimitiveResolve.ReadEscapeString(reader, handler);
                 nameValueCollection.Add(key, value);
                 if (reader.ReadBoolComma())
                     moveNext++;
@@ -221,7 +221,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static ExpandoObject ReadExpandoObject(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static ExpandoObject ReadExpandoObject(JsonReader reader, JsonDeserializeHandler handler)
         {
             if (reader.ReadNullOrObjLeft())
                 return null;
@@ -232,9 +232,9 @@ namespace Kooboo.Json.Deserialize
             int moveNext = 1;
             while (moveNext-- > 0)
             {
-                var key = PrimitiveResolve.ReadEscapeString(ref reader, handler);
+                var key = PrimitiveResolve.ReadEscapeString(reader, handler);
                 reader.ReadColon();
-                var value = PrimitiveResolve.ReadObject(ref reader, handler);
+                var value = PrimitiveResolve.ReadObject(reader, handler);
                 dic.Add(key, value);
                 if (reader.ReadBoolComma())
                     moveNext++;
@@ -245,7 +245,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static StringBuilder ReadStringBuilder(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static StringBuilder ReadStringBuilder(JsonReader reader, JsonDeserializeHandler handler)
         {
             var c = reader.BeforAnnotation();
             if (c == '"')
@@ -259,7 +259,12 @@ namespace Kooboo.Json.Deserialize
                     if (c == '"')//end
                     {
                         if (length > 0)
-                            charBufferSb.Append(reader.Json, start, length);
+                        {
+                            if (reader.Json != null)
+                                charBufferSb.Append(reader.Json, start, length);
+                            else
+                                charBufferSb.Append(reader.Buffer, start, length);
+                        }
                         return charBufferSb;
                     }
 
@@ -270,7 +275,10 @@ namespace Kooboo.Json.Deserialize
                     }
                     if (length > 0)
                     {
-                        charBufferSb.Append(reader.Json, start, length);
+                        if (reader.Json != null)
+                            charBufferSb.Append(reader.Json, start, length);
+                        else
+                            charBufferSb.Append(reader.Buffer, start, length);
                         start += length;
                         length = 0;
                     }
@@ -326,7 +334,7 @@ namespace Kooboo.Json.Deserialize
 
         [FuncLable(FuncType.SameType)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static BitArray ReadBitArray(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static BitArray ReadBitArray(JsonReader reader, JsonDeserializeHandler handler)
         {
             if (reader.ReadNullOrArrayLeft())
                 return null;
@@ -337,7 +345,7 @@ namespace Kooboo.Json.Deserialize
             bool[] values = new bool[reader.GetArrayLength(handler)];
             for (int i = 0; i < values.Length; i++)
             {
-                values[i] = PrimitiveResolve.ReadBool(ref reader, handler);
+                values[i] = PrimitiveResolve.ReadBool(reader, handler);
                 if (i != values.Length - 1)
                     reader.ReadComma();
             }
@@ -346,7 +354,7 @@ namespace Kooboo.Json.Deserialize
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static byte ReadGuidByte(ref JsonReader reader)
+        private static byte ReadGuidByte(JsonReader reader)
         {
             int a = reader.GetChar();
 

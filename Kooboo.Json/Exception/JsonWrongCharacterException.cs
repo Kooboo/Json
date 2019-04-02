@@ -59,7 +59,7 @@ namespace Kooboo.Json
 
         internal JsonWrongCharacterException(JsonReader reader, char correctChar) : this(
             reader.Length - reader.Remaining, correctChar,
-            reader.Json[reader.Length - reader.Remaining])
+            reader[reader.Length - reader.Remaining])
         {
 
         }

@@ -34,7 +34,7 @@ namespace Kooboo.Json.Deserialize
 #endif
 
 #if VIEW && NET45
-            var methodBuilder = typeBuilder.DefineMethod($"Deserialize_{typeof(T).Name}", System.Reflection.MethodAttributes.Static | System.Reflection.MethodAttributes.Public, typeof(T), new Type[] { typeof(JsonReader).MakeByRefType(), typeof(JsonDeserializeHandler) });
+            var methodBuilder = typeBuilder.DefineMethod($"Deserialize_{typeof(T).Name}", System.Reflection.MethodAttributes.Static | System.Reflection.MethodAttributes.Public, typeof(T), new Type[] { typeof(JsonReader), typeof(JsonDeserializeHandler) });
 
             Expression.Lambda<ResolveDelegate<T>>(
                        body, pars).CompileToMethod(methodBuilder);

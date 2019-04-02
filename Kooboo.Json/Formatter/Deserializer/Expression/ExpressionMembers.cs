@@ -12,7 +12,7 @@ namespace Kooboo.Json.Deserialize
 
         //- reader (FuncArgs)
         internal static readonly ParameterExpression Reader =
-            Expression.Parameter(typeof(JsonReader).MakeByRefType(), "reader");
+            Expression.Parameter(typeof(JsonReader), "reader");
 
         //- reader.Remaining (FuncArgs.Member)
         internal static readonly MemberExpression Remaining =
@@ -104,9 +104,9 @@ namespace Kooboo.Json.Deserialize
         internal static readonly BinaryExpression ValueLengthAssignSkipObj = Expression.Assign(ValueLength,
             Expression.Call(Reader, JsonReader._SkipObj, JsonDeserializeHandler));
 
-        //- reader.Substring(currentIdx,valueLength)
-        internal static readonly Expression JsonSubstring =
-            Expression.Call(Reader, JsonReader._SubString, CurrentIdx, ValueLength);
+        //- reader.RemoveQuoteAndSubString(currentIdx,valueLength)
+        internal static readonly Expression JsonRemoveQuoteAndSubstring =
+            Expression.Call(Reader, JsonReader._RemoveQuoteAndSubString, CurrentIdx, ValueLength);
 
         //- object formatResult = ValueFormat.ReadValueFormat(  reader.Json.Substring(currentIdx,leng) ,out isValueFormat);
         internal static readonly ParameterExpression FormatResult = Expression.Variable(typeof(object), "formatResult");

@@ -14,7 +14,7 @@ namespace Kooboo.Json.Deserialize
 
         //---------Avoid
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadAvoidNull(ref JsonReader reader)
+        internal static void ReadAvoidNull(JsonReader reader)
         {
             char c = reader.BeforAnnotation();
             if (c == 'n' && reader.StrCompair("ull"))
@@ -26,7 +26,7 @@ namespace Kooboo.Json.Deserialize
 
         //---------T?
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static T? ReadNullable<T>(ref JsonReader reader, JsonDeserializeHandler handler) where T : struct
+        internal static T? ReadNullable<T>(JsonReader reader, JsonDeserializeHandler handler) where T : struct
         {
             var c = reader.BeforAnnotation();
             if (c == 'n')
@@ -38,13 +38,13 @@ namespace Kooboo.Json.Deserialize
             else
             {
                 reader.RollbackChar();
-                return (T?)ResolveProvider<T>.InvokeGet(ref reader, handler);
+                return (T?)ResolveProvider<T>.InvokeGet(reader, handler);
             }
         }
 
         //---------Enum
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static object ReadEnum(ref JsonReader reader, JsonDeserializeHandler handler)
+        internal static object ReadEnum(JsonReader reader, JsonDeserializeHandler handler)
         {
             var c = reader.BeforAnnotation();
             var t = handler.Types.Dequeue();
@@ -60,13 +60,13 @@ namespace Kooboo.Json.Deserialize
                 reader.RollbackChar();
                 var basicType = Enum.GetUnderlyingType(t);
                 if (basicType == typeof(long))
-                    return PrimitiveResolve.ReadLong(ref reader, handler);
+                    return PrimitiveResolve.ReadLong(reader, handler);
                 else if (basicType == typeof(ulong))
-                    return PrimitiveResolve.ReadULong(ref reader, handler);
+                    return PrimitiveResolve.ReadULong(reader, handler);
                 else if (basicType == typeof(uint))
-                    return PrimitiveResolve.ReadUInt(ref reader, handler);
+                    return PrimitiveResolve.ReadUInt(reader, handler);
                 else
-                    return PrimitiveResolve.ReadInt(ref reader, handler);
+                    return PrimitiveResolve.ReadInt(reader, handler);
             }
             throw new JsonDeserializationTypeResolutionException(reader, t);
         }

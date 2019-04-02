@@ -11,6 +11,9 @@ namespace Kooboo.Json.Deserialize
         internal static FieldInfo _Json =
             typeof(JsonReader).GetField(nameof(Json), BindingFlags.NonPublic | BindingFlags.Instance);
 
+        internal static FieldInfo _Buffer =
+           typeof(JsonReader).GetField(nameof(Buffer), BindingFlags.NonPublic | BindingFlags.Instance);
+
         internal static FieldInfo _Length =
             typeof(JsonReader).GetField(nameof(Length), BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -59,18 +62,19 @@ namespace Kooboo.Json.Deserialize
 
         internal static MethodInfo _GetArrayLength = GetMethodInfo(nameof(GetArrayLength));
 
-        internal static MethodInfo _SubString = GetMethodInfo(nameof(SubString));
+        internal static MethodInfo _RemoveQuoteAndSubString = GetMethodInfo(nameof(RemoveQuoteAndSubString));
 
         internal static MethodInfo _GetChar = GetMethodInfo(nameof(GetChar));
         #endregion
 
         internal StringBuilder CharBufferSb;
         internal string Json;
+        internal char[] Buffer;
         internal int Length;
         internal char* Pointer;
         internal int Remaining;
 
-        
+
         internal JsonReader(string json, char* c)
         {
             Json = json;
@@ -78,6 +82,39 @@ namespace Kooboo.Json.Deserialize
             Pointer = c;
             Remaining = Length;
             CharBufferSb = null;
+            Buffer = null;
+        }
+
+        internal JsonReader(char[] buffer,int length, char* c)
+        {
+            Buffer = buffer;
+            Length = length;
+            Pointer = c;
+            Remaining = Length;
+            CharBufferSb = null;
+            Json = null;
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal string SubString(int start, int length)
+        {
+            if (Json != null)
+                return Json.Substring(start, length);
+            else//char[]
+                return new string(Buffer, start, length);
+        }
+
+        internal char this[int idx]
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                if (Json != null)
+                    return Json[idx];
+                else
+                    return Buffer[idx];
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -407,7 +444,7 @@ namespace Kooboo.Json.Deserialize
                     if (leng == 0)
                         return string.Empty;
                     else
-                        return Json.Substring(idx, leng);
+                        return this.SubString(idx, leng);
             }
             else if (c == 'n' && StrCompair("ull"))
             {
@@ -522,7 +559,8 @@ namespace Kooboo.Json.Deserialize
                         case 'n': continue;
                         case 'r': continue;
                         case 't': continue;
-                        case 'u': {
+                        case 'u':
+                            {
                                 c = GetChar();
                                 if (!((c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f'))) throw new JsonDeserializationTypeResolutionException(this, typeof(string));
                                 c = GetChar();
@@ -656,11 +694,11 @@ namespace Kooboo.Json.Deserialize
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal string SubString(int idx, int length)
+        internal string RemoveQuoteAndSubString(int idx, int length)
         {
-            if (Json[idx] == 'n')
+            if (this[idx] == 'n')
                 return null;
-            return Json.Substring(idx + 1, length - 2); //remove \"   \"
+            return this.SubString(idx + 1, length - 2); //remove \"   \"
         }
 
         private static MethodInfo GetMethodInfo(string name)

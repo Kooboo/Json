@@ -437,14 +437,14 @@ namespace Kooboo.Json.Deserialize
         }
         private static ResolveDelegate<T> GenerateLambdaCall(MethodInfo methodInfo)
         {
-            ParameterExpression readerArg = Expression.Parameter(typeof(JsonReader).MakeByRefType(), "reader");
+            ParameterExpression readerArg = Expression.Parameter(typeof(JsonReader), "reader");
             ParameterExpression handlerArg = Expression.Parameter(typeof(JsonDeserializeHandler), "handler");
             var body = Expression.Call(methodInfo, readerArg, handlerArg);
             return Expression.Lambda<ResolveDelegate<T>>(body, readerArg, handlerArg).Compile();
         }
         private static ResolveDelegate<T> GenerateLambdaCallWithEnqueueType(MethodInfo methodInfo, Type t)
         {
-            ParameterExpression readerArg = Expression.Parameter(typeof(JsonReader).MakeByRefType(), "reader");
+            ParameterExpression readerArg = Expression.Parameter(typeof(JsonReader), "reader");
             ParameterExpression handlerArg = Expression.Parameter(typeof(JsonDeserializeHandler), "handler");
             MemberExpression option = Expression.MakeMemberAccess(handlerArg, JsonDeserializeHandler._Types);
             LabelTarget label = Expression.Label(t);
