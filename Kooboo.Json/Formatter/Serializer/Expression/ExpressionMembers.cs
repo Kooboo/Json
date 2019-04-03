@@ -14,8 +14,9 @@ namespace Kooboo.Json.Serializer
         //- return(label);
         internal static readonly LabelTarget ReturnLable = Expression.Label(typeof(void));
 
-        //- handler.sbArg;
-        internal static readonly MemberExpression SbArg = Expression.MakeMemberAccess(HandlerArg, typeof(JsonSerializerHandler).GetField("Writer", BindingFlags.NonPublic | BindingFlags.Instance));
+        //- handler.WriteString
+        internal static readonly MemberExpression WriteString = Expression.MakeMemberAccess(HandlerArg, JsonSerializerHandler._WriteString);
+
         //- handler.option;
         internal static readonly MemberExpression JOptionArg = Expression.MakeMemberAccess(HandlerArg, JsonSerializerHandler._Option);
         //- handler.serializeStacks
@@ -79,9 +80,9 @@ namespace Kooboo.Json.Serializer
           );
 
         //call
-        internal static readonly MethodCallExpression WriteLeft = Expression.Call(SbArg, typeof(StringBuilder).GetMethod("Append", new[] { typeof(string) }), Expression.Constant("{"));
-        internal static readonly MethodCallExpression WriteRight = Expression.Call(SbArg, typeof(StringBuilder).GetMethod("Append", new[] { typeof(string) }), Expression.Constant("}"));
-        internal static readonly MethodCallExpression WriteComma = Expression.Call(SbArg, typeof(StringBuilder).GetMethod("Append", new[] { typeof(string) }), Expression.Constant(","));
+        internal static readonly MethodCallExpression WriteLeft = Expression.Call(WriteString, JsonSerializerHandler._WriteStringInvoke, Expression.Constant("{"));
+        internal static readonly MethodCallExpression WriteRight = Expression.Call(WriteString, JsonSerializerHandler._WriteStringInvoke, Expression.Constant("}"));
+        internal static readonly MethodCallExpression WriteComma = Expression.Call(WriteString, JsonSerializerHandler._WriteStringInvoke, Expression.Constant(","));
 
         internal enum RefernceByEmptyType
         {
@@ -106,7 +107,7 @@ namespace Kooboo.Json.Serializer
             else if (keyType.IsEnum)//The default is tostring
             {
                 calls.Add(Append("\""));
-                calls.Add(Expression.Call(SbArg, typeof(StringBuilder).GetMethod("Append", new[] { typeof(string) }), Expression.Call(key, typeof(Enum).GetMethod("ToString", new Type[0]))));
+                calls.Add(Expression.Call(WriteString, JsonSerializerHandler._WriteStringInvoke, Expression.Call(key, typeof(Enum).GetMethod("ToString", new Type[0]))));
                 calls.Add(Append("\":"));
             }
 
@@ -153,35 +154,35 @@ namespace Kooboo.Json.Serializer
 
         internal static MethodCallExpression AppendKey(string str)
         {
-            return Expression.Call(SbArg, typeof(StringBuilder).GetMethod("Append", new[] { typeof(string) }), Expression.Constant("\"" + str + "\":"));
+            return Expression.Call(WriteString, JsonSerializerHandler._WriteStringInvoke, Expression.Constant("\"" + str + "\":"));
         }
         internal static MethodCallExpression Append(string str)
         {
-            return Expression.Call(SbArg, typeof(StringBuilder).GetMethod("Append", new[] { typeof(string) }), Expression.Constant(str));
+            return Expression.Call(WriteString, JsonSerializerHandler._WriteStringInvoke, Expression.Constant(str));
         }
         internal static MethodCallExpression Append(Expression strExpression)
         {
-            return Expression.Call(SbArg, typeof(StringBuilder).GetMethod("Append", new[] { typeof(string) }), strExpression);
+            return Expression.Call(WriteString, JsonSerializerHandler._WriteStringInvoke, strExpression);
         }
         internal static MethodCallExpression RemoveDictionaryKey()
         {
-            return Expression.Call(RemoveWriterHelper._RemoveDictionaryKey, SbArg);
+            return Expression.Call(RemoveWriterHelper._RemoveDictionaryKey, HandlerArg);
         }
         internal static MethodCallExpression RemoveArrayItem()
         {
-            return Expression.Call(RemoveWriterHelper._RemoveArrayItem, SbArg);
+            return Expression.Call(RemoveWriterHelper._RemoveArrayItem, HandlerArg);
         }
         internal static MethodCallExpression RemoveKeyAndAddIndex()
         {
-            return Expression.Call(RemoveWriterHelper._RemoveKeyAndAddIndex, SbArg, ListCommaIndexs);
+            return Expression.Call(RemoveWriterHelper._RemoveKeyAndAddIndex, HandlerArg, ListCommaIndexs);
         }
         internal static MethodCallExpression RemoveLastComma()
         {
-            return Expression.Call(RemoveWriterHelper._RemoveLastComma, SbArg);
+            return Expression.Call(RemoveWriterHelper._RemoveLastComma, HandlerArg);
         }
         internal static MethodCallExpression DeleteComma()
         {
-            return Expression.Call(RemoveWriterHelper._DeleteComma, SbArg, ListCommaIndexs);
+            return Expression.Call(RemoveWriterHelper._DeleteComma, HandlerArg, ListCommaIndexs);
         }
     }
 }

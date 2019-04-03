@@ -16,7 +16,7 @@ namespace Kooboo.Json.Serializer
         {
             if (value == null)
             {
-                handler.Writer.Append("null");
+                handler.WriteString("null");
                 return;
             }
 
@@ -25,38 +25,38 @@ namespace Kooboo.Json.Serializer
                 if (handler.SerializeStacks.Contains(value))
                 {
                     if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Null)
-                        handler.Writer.Append("null");
+                        handler.WriteString("null");
                     else if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Empty)
-                        handler.Writer.Append("{}");
+                        handler.WriteString("{}");
                     else if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Remove)
-                        RemoveWriterHelper.RemoveDictionaryKey(handler.Writer);
+                        RemoveWriterHelper.RemoveDictionaryKey(handler);
                     return;
                 }
                 handler.SerializeStacks.Push(value);
             }
 
             var t = value.GetType();
-            handler.Writer.Append("{");
+            handler.WriteString("{");
             bool isFirst = true;
             foreach (var item in t.GetProperties())
             {
                 if (isFirst)
                     isFirst = false;
                 else
-                    handler.Writer.Append(",");
-                handler.Writer.Append("\"");
-                handler.Writer.Append(item.Name);
-                handler.Writer.Append("\"");
-                handler.Writer.Append(":");
+                    handler.WriteString(",");
+                handler.WriteString("\"");
+                handler.WriteString(item.Name);
+                handler.WriteString("\"");
+                handler.WriteString(":");
                 SerializerObjectJump.GetThreadSafetyJumpAction(item.PropertyType)(item.GetValue(value), handler);
             }
-            handler.Writer.Append("}");
+            handler.WriteString("}");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void AvoidTypes(object typeVar, JsonSerializerHandler handler)
         {
-            handler.Writer.Append(typeVar == null ? "null" : "{}");
+            handler.WriteString(typeVar == null ? "null" : "{}");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -66,9 +66,9 @@ namespace Kooboo.Json.Serializer
                 PrimitiveNormal.WriteValue(value.GetHashCode(), handler);
             else
             {
-                handler.Writer.Append("\"");
-                handler.Writer.Append(value.ToString());
-                handler.Writer.Append("\"");
+                handler.WriteString("\"");
+                handler.WriteString(value.ToString());
+                handler.WriteString("\"");
             }
         }
 
@@ -78,7 +78,7 @@ namespace Kooboo.Json.Serializer
         {
             if (value == null)
             {
-                handler.Writer.Append("null");
+                handler.WriteString("null");
                 return;
             }
 
@@ -112,27 +112,27 @@ namespace Kooboo.Json.Serializer
                 if (handler.SerializeStacks.Contains(value))
                 {
                     if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Null)
-                        handler.Writer.Append("null");
+                        handler.WriteString("null");
                     else if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Empty)
-                        handler.Writer.Append("[]");
+                        handler.WriteString("[]");
                     else if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Remove)
-                        RemoveWriterHelper.RemoveArrayItem(handler.Writer);
+                        RemoveWriterHelper.RemoveArrayItem(handler);
                     return;
                 }
                 handler.SerializeStacks.Push(value);
             }
 
-            handler.Writer.Append("[");
+            handler.WriteString("[");
             bool isFirst = true;
             foreach (var obj in value)
             {
                 if (isFirst)
                     isFirst = false;
                 else
-                    handler.Writer.Append(",");
+                    handler.WriteString(",");
                 PrimitiveNormal.WriteValue(obj, handler);
             }
-            handler.Writer.Append("]");
+            handler.WriteString("]");
             if (handler.Option.ReferenceLoopHandling != JsonReferenceHandlingEnum.None)
                 handler.SerializeStacks.Pop();
         }
@@ -144,20 +144,20 @@ namespace Kooboo.Json.Serializer
                 if (handler.SerializeStacks.Contains(value))
                 {
                     if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Null)
-                        handler.Writer.Append("null");
+                        handler.WriteString("null");
                     else if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Empty)
-                        handler.Writer.Append("[]");
+                        handler.WriteString("[]");
                     else if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Remove)
-                        RemoveWriterHelper.RemoveArrayItem(handler.Writer);
+                        RemoveWriterHelper.RemoveArrayItem(handler);
                     return;
                 }
                 handler.SerializeStacks.Push(value);
             }
             var action = SerializerObjectJump.GetThreadSafetyJumpAction(value.GetType().GetElementType());
-            handler.Writer.Append("[");
+            handler.WriteString("[");
             var enumerator = value.GetEnumerator();
             MultidimensionalWrite(enumerator, handler, value, action, value.GetLength(0), 0);
-            handler.Writer.Append("]");
+            handler.WriteString("]");
             if (handler.Option.ReferenceLoopHandling != JsonReferenceHandlingEnum.None)
                 handler.SerializeStacks.Pop();
         }
@@ -167,14 +167,14 @@ namespace Kooboo.Json.Serializer
             for (int i = 0; i < leng; i++)
             {
                 if (level != value.Rank - 1)
-                    handler.Writer.Append("[");
+                    handler.WriteString("[");
 
                 if (level == value.Rank - 1)
                 {
                     enumerator.MoveNext();
                     action(enumerator.Current, handler);
                     if (i != leng - 1)
-                        handler.Writer.Append(",");
+                        handler.WriteString(",");
                     continue;
                 }
 
@@ -182,10 +182,10 @@ namespace Kooboo.Json.Serializer
                 ++localLevel;
                 MultidimensionalWrite(enumerator, handler, value, action, value.GetLength(localLevel), localLevel);
 
-                handler.Writer.Append("]");
+                handler.WriteString("]");
 
                 if (i != leng - 1)
-                    handler.Writer.Append(",");
+                    handler.WriteString(",");
             }
 
         }
@@ -197,7 +197,7 @@ namespace Kooboo.Json.Serializer
         {
             if (value == null)
             {
-                handler.Writer.Append("null");
+                handler.WriteString("null");
                 return;
             }
             var t = value.GetType();
@@ -217,18 +217,18 @@ namespace Kooboo.Json.Serializer
                 if (handler.SerializeStacks.Contains(value))
                 {
                     if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Null)
-                        handler.Writer.Append("null");
+                        handler.WriteString("null");
                     else if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Empty)
-                        handler.Writer.Append("{}");
+                        handler.WriteString("{}");
                     else if (handler.Option.ReferenceLoopHandling == JsonReferenceHandlingEnum.Remove)
-                        RemoveWriterHelper.RemoveDictionaryKey(handler.Writer);
+                        RemoveWriterHelper.RemoveDictionaryKey(handler);
                     return;
                 }
                 handler.SerializeStacks.Push(value);
             }
 
             bool isFirst = true;
-            handler.Writer.Append("{");
+            handler.WriteString("{");
             foreach (DictionaryEntry item in value)
             {
                 var keyType = item.Key.GetType();
@@ -238,20 +238,20 @@ namespace Kooboo.Json.Serializer
                 if (isFirst)
                     isFirst = false;
                 else
-                    handler.Writer.Append(",");
+                    handler.WriteString(",");
 
                 if (keyType.IsPrimitive || (keyType.IsEnum && handler.Option.IsEnumNum))//string,primitive,enum,guid,datetime
-                    handler.Writer.Append("\"");
+                    handler.WriteString("\"");
 
                 PrimitiveNormal.WriteValue(item.Key, handler);
 
                 if (keyType.IsPrimitive || (keyType.IsEnum && handler.Option.IsEnumNum))
-                    handler.Writer.Append("\"");
+                    handler.WriteString("\"");
 
-                handler.Writer.Append(":");
+                handler.WriteString(":");
                 PrimitiveNormal.WriteValue(item.Value, handler);
             }
-            handler.Writer.Append("}");
+            handler.WriteString("}");
             if (handler.Option.ReferenceLoopHandling != JsonReferenceHandlingEnum.None)
                 handler.SerializeStacks.Pop();
         }

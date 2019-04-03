@@ -13,12 +13,12 @@ namespace Kooboo.Json.Serializer
             // Gotta special case this, we can't negate it
             if (value == int.MinValue)
             {
-                handler.Writer.Append("-2147483648");
+                handler.WriteString("-2147483648");
                 return;
             }
             if (value == int.MaxValue)
             {
-                handler.Writer.Append("2147483647");
+                handler.WriteString("2147483647");
                 return;
             }
             var ptr = 35;
@@ -26,7 +26,7 @@ namespace Kooboo.Json.Serializer
             uint copy;
             if (value < 0)
             {
-                handler.Writer.Append('-');
+                handler.WriteChar('-');
                 copy = (uint)(-value);
             }
             else
@@ -47,7 +47,7 @@ namespace Kooboo.Json.Serializer
                 ptr++;
             }
 
-            handler.Writer.Append(buffer, ptr + 1, 35 - ptr);
+            handler.WriteChars(buffer, ptr + 1, 35 - ptr);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
@@ -55,7 +55,7 @@ namespace Kooboo.Json.Serializer
         {
             if (value == uint.MaxValue)
             {
-                handler.Writer.Append("4294967295");
+                handler.WriteString("4294967295");
                 return;
             }
             var ptr = 35;
@@ -77,7 +77,7 @@ namespace Kooboo.Json.Serializer
                 ptr++;
             }
 
-            handler.Writer.Append(buffer, ptr + 1, 35 - ptr);
+            handler.WriteChars(buffer, ptr + 1, 35 - ptr);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
@@ -85,7 +85,7 @@ namespace Kooboo.Json.Serializer
         {
             if (value == long.MinValue)
             {
-                handler.Writer.Append("-9223372036854775808");
+                handler.WriteString("-9223372036854775808");
                 return;
             }
             char[] buffer = new char[36];
@@ -94,7 +94,7 @@ namespace Kooboo.Json.Serializer
             ulong copy;
             if (value < 0)
             {
-                handler.Writer.Append('-');
+                handler.WriteChar('-');
                 copy = (ulong)(-value);
             }
             else
@@ -117,7 +117,7 @@ namespace Kooboo.Json.Serializer
                 ptr++;
             }
 
-            handler.Writer.Append(buffer, ptr + 1, 35 - ptr);
+            handler.WriteChars(buffer, ptr + 1, 35 - ptr);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
@@ -125,7 +125,7 @@ namespace Kooboo.Json.Serializer
         {
             if (value == ulong.MaxValue)
             {
-                handler.Writer.Append("18446744073709551615");
+                handler.WriteString("18446744073709551615");
                 return;
             }
 
@@ -148,7 +148,7 @@ namespace Kooboo.Json.Serializer
                 ptr++;
             }
 
-            handler.Writer.Append(buffer, ptr + 1, 35 - ptr);
+            handler.WriteChars(buffer, ptr + 1, 35 - ptr);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
@@ -157,22 +157,22 @@ namespace Kooboo.Json.Serializer
             switch (value)
             {
                 case float.NaN:
-                    handler.Writer.Append("\"NaN\"");
+                    handler.WriteString("\"NaN\"");
                     return;
                 case float.NegativeInfinity:
-                    handler.Writer.Append("\"-Infinity\"");
+                    handler.WriteString("\"-Infinity\"");
                     return;
                 case float.PositiveInfinity:
-                    handler.Writer.Append("\"Infinity\"");
+                    handler.WriteString("\"Infinity\"");
                     return;
             }
-            handler.Writer.Append(value.ToString("R",CultureInfo.InvariantCulture));
+            handler.WriteString(value.ToString("R",CultureInfo.InvariantCulture));
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
         internal static void WriteValue(decimal value, JsonSerializerHandler handler)
         {
-            handler.Writer.Append(value.ToString(CultureInfo.InvariantCulture));
+            handler.WriteString(value.ToString(CultureInfo.InvariantCulture));
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
@@ -181,16 +181,16 @@ namespace Kooboo.Json.Serializer
             switch (value)
             {
                 case double.NaN:
-                    handler.Writer.Append("\"NaN\"");
+                    handler.WriteString("\"NaN\"");
                     return;
                 case double.NegativeInfinity:
-                    handler.Writer.Append("\"-Infinity\"");
+                    handler.WriteString("\"-Infinity\"");
                     return;
                 case double.PositiveInfinity:
-                    handler.Writer.Append("\"Infinity\"");
+                    handler.WriteString("\"Infinity\"");
                     return;
             }
-            handler.Writer.Append(value.ToString("R", CultureInfo.InvariantCulture));
+            handler.WriteString(value.ToString("R", CultureInfo.InvariantCulture));
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
@@ -220,7 +220,7 @@ namespace Kooboo.Json.Serializer
         [FuncLable(FuncType.SameType)]
         internal static void WriteValue(bool value, JsonSerializerHandler handler)
         {
-            handler.Writer.Append(value ? "true" : "false");
+            handler.WriteString(value ? "true" : "false");
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
@@ -255,11 +255,11 @@ namespace Kooboo.Json.Serializer
              */
             if (value == null)
             {
-                handler.Writer.Append("null");
+                handler.WriteString("null");
                 return;
             }
             //handler.Writer.EnsureCapacity(handler.Writer.Capacity + value.Length);
-            handler.Writer.Append("\"");
+            handler.WriteString("\"");
             fixed (char* strFixed = value)
             {
                 char* str = strFixed;
@@ -273,62 +273,62 @@ namespace Kooboo.Json.Serializer
 
                     if (c == '\\')//\u005c   //%x5c        a\\b  =>  a\u005cb
                     {
-                        handler.Writer.Append(@"\\");
+                        handler.WriteString(@"\\");
                         continue;
                     }
 
                     if (c == '"')//\u0022   //%x22
                     {
-                        handler.Writer.Append("\\\"");
+                        handler.WriteString("\\\"");
                         continue;
                     }
                     switch (c)
                     {
                         //%x00-x19
-                        case '\u0000': handler.Writer.Append(@"\u0000"); continue;
-                        case '\u0001': handler.Writer.Append(@"\u0001"); continue;
-                        case '\u0002': handler.Writer.Append(@"\u0002"); continue;
-                        case '\u0003': handler.Writer.Append(@"\u0003"); continue;
-                        case '\u0004': handler.Writer.Append(@"\u0004"); continue;
-                        case '\u0005': handler.Writer.Append(@"\u0005"); continue;
-                        case '\u0006': handler.Writer.Append(@"\u0006"); continue;
-                        case '\u0007': handler.Writer.Append(@"\u0007"); continue;
-                        case '\u0008': handler.Writer.Append(@"\b"); continue;
-                        case '\u0009': handler.Writer.Append(@"\t"); continue;
-                        case '\u000A': handler.Writer.Append(@"\n"); continue;
-                        case '\u000B': handler.Writer.Append(@"\u000b"); continue;
-                        case '\u000C': handler.Writer.Append(@"\f"); continue;
-                        case '\u000D': handler.Writer.Append(@"\r"); continue;
-                        case '\u000E': handler.Writer.Append(@"\u000e"); continue;
-                        case '\u000F': handler.Writer.Append(@"\u000f"); continue;
-                        case '\u0010': handler.Writer.Append(@"\u0010"); continue;
-                        case '\u0011': handler.Writer.Append(@"\u0011"); continue;
-                        case '\u0012': handler.Writer.Append(@"\u0012"); continue;
-                        case '\u0013': handler.Writer.Append(@"\u0013"); continue;
-                        case '\u0014': handler.Writer.Append(@"\u0014"); continue;
-                        case '\u0015': handler.Writer.Append(@"\u0015"); continue;
-                        case '\u0016': handler.Writer.Append(@"\u0016"); continue;
-                        case '\u0017': handler.Writer.Append(@"\u0017"); continue;
-                        case '\u0018': handler.Writer.Append(@"\u0018"); continue;
-                        case '\u0019': handler.Writer.Append(@"\u0019"); continue;
-                        case '\u001A': handler.Writer.Append(@"\u001a"); continue;
-                        case '\u001B': handler.Writer.Append(@"\u001b"); continue;
-                        case '\u001C': handler.Writer.Append(@"\u001c"); continue;
-                        case '\u001D': handler.Writer.Append(@"\u001d"); continue;
-                        case '\u001E': handler.Writer.Append(@"\u001e"); continue;
-                        case '\u001F': handler.Writer.Append(@"\u001f"); continue;
+                        case '\u0000': handler.WriteString(@"\u0000"); continue;
+                        case '\u0001': handler.WriteString(@"\u0001"); continue;
+                        case '\u0002': handler.WriteString(@"\u0002"); continue;
+                        case '\u0003': handler.WriteString(@"\u0003"); continue;
+                        case '\u0004': handler.WriteString(@"\u0004"); continue;
+                        case '\u0005': handler.WriteString(@"\u0005"); continue;
+                        case '\u0006': handler.WriteString(@"\u0006"); continue;
+                        case '\u0007': handler.WriteString(@"\u0007"); continue;
+                        case '\u0008': handler.WriteString(@"\b"); continue;
+                        case '\u0009': handler.WriteString(@"\t"); continue;
+                        case '\u000A': handler.WriteString(@"\n"); continue;
+                        case '\u000B': handler.WriteString(@"\u000b"); continue;
+                        case '\u000C': handler.WriteString(@"\f"); continue;
+                        case '\u000D': handler.WriteString(@"\r"); continue;
+                        case '\u000E': handler.WriteString(@"\u000e"); continue;
+                        case '\u000F': handler.WriteString(@"\u000f"); continue;
+                        case '\u0010': handler.WriteString(@"\u0010"); continue;
+                        case '\u0011': handler.WriteString(@"\u0011"); continue;
+                        case '\u0012': handler.WriteString(@"\u0012"); continue;
+                        case '\u0013': handler.WriteString(@"\u0013"); continue;
+                        case '\u0014': handler.WriteString(@"\u0014"); continue;
+                        case '\u0015': handler.WriteString(@"\u0015"); continue;
+                        case '\u0016': handler.WriteString(@"\u0016"); continue;
+                        case '\u0017': handler.WriteString(@"\u0017"); continue;
+                        case '\u0018': handler.WriteString(@"\u0018"); continue;
+                        case '\u0019': handler.WriteString(@"\u0019"); continue;
+                        case '\u001A': handler.WriteString(@"\u001a"); continue;
+                        case '\u001B': handler.WriteString(@"\u001b"); continue;
+                        case '\u001C': handler.WriteString(@"\u001c"); continue;
+                        case '\u001D': handler.WriteString(@"\u001d"); continue;
+                        case '\u001E': handler.WriteString(@"\u001e"); continue;
+                        case '\u001F': handler.WriteString(@"\u001f"); continue;
                         /*JavaScript   */
                         case '\u0085': // Next Line
-                            handler.Writer.Append(@"\u0085"); continue;
+                            handler.WriteString(@"\u0085"); continue;
                         case '\u2028': // Line Separator
-                            handler.Writer.Append(@"\u2028"); continue;
+                            handler.WriteString(@"\u2028"); continue;
                         case '\u2029': // Paragraph Separator
-                            handler.Writer.Append(@"\u2029"); continue;
-                        default: handler.Writer.Append(c); continue;
+                            handler.WriteString(@"\u2029"); continue;
+                        default: handler.WriteChar(c); continue;
                     }
                 }
             }
-            handler.Writer.Append("\"");
+            handler.WriteString("\"");
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [FuncLable(FuncType.SameType)]
@@ -349,7 +349,7 @@ namespace Kooboo.Json.Serializer
         {
             if (obj == null)
             {
-                handler.Writer.Append("null");
+                handler.WriteString("null");
                 return;
             }
             var type = obj.GetType();

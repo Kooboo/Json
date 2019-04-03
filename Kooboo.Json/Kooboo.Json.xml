@@ -280,9 +280,24 @@
                 Provides some configuration for serialization
             </summary>
         </member>
-        <member name="F:Kooboo.Json.JsonSerializerHandler.Writer">
+        <member name="F:Kooboo.Json.JsonSerializerHandler.WriteLong">
             <summary>
-            Writer json container
+            Write Long
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerHandler.WriteChar">
+            <summary>
+            Write Char
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerHandler.WriteString">
+            <summary>
+            Write String
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerHandler.WriteChars">
+            <summary>
+            Write Chars
             </summary>
         </member>
         <member name="F:Kooboo.Json.JsonSerializerHandler.Option">
@@ -396,6 +411,15 @@
             <param name="value">Value</param>
             <param name="option">Serialize option</param>
             <returns>JSON strings</returns>
+        </member>
+        <member name="M:Kooboo.Json.JsonSerializer.ToJson``1(``0,System.IO.StreamWriter,Kooboo.Json.JsonSerializerOption)">
+            <summary>
+                Serialize Object from the StreamWriter
+            </summary>
+            <typeparam name="T">Value type</typeparam>
+            <param name="value">Value</param>
+            <param name="streamWriter">Stream</param>
+            <param name="option">Serialize option</param>
         </member>
         <member name="M:Kooboo.Json.JsonSerializer.ToObject``1(System.String,Kooboo.Json.JsonDeserializeOption)">
             <summary>

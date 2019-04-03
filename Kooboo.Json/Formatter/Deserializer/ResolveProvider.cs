@@ -22,10 +22,10 @@ namespace Kooboo.Json.Deserialize
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static unsafe T Convert(StreamReader streamReader, JsonDeserializeHandler handler)
         {
-            //stream is lazy,peek() =>call  ReadBuffer();
+            //peek() => call  ReadBuffer(); =>call internal origin stream  byte[] copy local byte[] -> default utf8 convert -> generate  char[]
             streamReader.Peek();
-            char[] buf = StreamOperate.StreamReader_CharBuffer(streamReader);
-            int len = StreamOperate.StreamReader_CharLen(streamReader);
+            char[] buf = StreamOperate.GetStreamReaderCharBuffer(streamReader);
+            int len = StreamOperate.GetStreamReaderCharLen(streamReader);
             fixed (char* c = buf)
             {
                 JsonReader reader = new JsonReader(buf,len, c);

@@ -10,18 +10,18 @@ namespace Kooboo.Json.Serializer
         internal static void WriteValue(Exception value, JsonSerializerHandler handler)
         {
             if (value == null)
-                handler.Writer.Append("null");
+                handler.WriteString("null");
             else
             {
-                handler.Writer.Append("{\"Message\":");
+                handler.WriteString("{\"Message\":");
                 PrimitiveNormal.WriteValue(value.Message, handler);
-                handler.Writer.Append(",\"Source\":");
+                handler.WriteString(",\"Source\":");
                 PrimitiveNormal.WriteValue(value.Source, handler);
-                handler.Writer.Append(",\"StackTrace\":");
+                handler.WriteString(",\"StackTrace\":");
                 PrimitiveNormal.WriteValue(value.StackTrace, handler);
-                handler.Writer.Append(",\"HelpLink\":");
+                handler.WriteString(",\"HelpLink\":");
                 PrimitiveNormal.WriteValue(value.HelpLink, handler);
-                handler.Writer.Append("}");
+                handler.WriteString("}");
             }
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -29,7 +29,7 @@ namespace Kooboo.Json.Serializer
         internal static void WriteValue(Type value, JsonSerializerHandler handler)
         {
             if (value == null)
-                handler.Writer.Append("null");
+                handler.WriteString("null");
             else
                 PrimitiveNormal.WriteValue(value.AssemblyQualifiedName, handler);
         }

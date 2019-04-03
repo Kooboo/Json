@@ -21,13 +21,39 @@ namespace Kooboo.Json
         /// <returns>JSON strings</returns>
         public static string ToJson<T>(T value, JsonSerializerOption option = null)
         {
-            var handler = new JsonSerializerHandler
+            var handler = new JsonSerializerHandler(new System.Text.StringBuilder())
             {
                 Option = option?? defaultSerializerOption
             };
             Serializer.FormattingProvider<T>.Get(value, handler);
             return handler.ToString();
         }
+
+        /// <summary>
+        ///     Serialize Object from the StreamWriter
+        /// </summary>
+        /// <typeparam name="T">Value type</typeparam>
+        /// <param name="value">Value</param>
+        /// <param name="streamWriter">Stream</param>
+        /// <param name="option">Serialize option</param>
+        public static void ToJson<T>(T value, StreamWriter streamWriter, JsonSerializerOption option = null)
+        {
+            streamWriter.Flush();//posting set 0
+            bool isAutoFlush = false;
+            if (streamWriter.AutoFlush)
+            {
+                isAutoFlush = true;
+                streamWriter.AutoFlush = false;
+            }
+            var handler = new JsonSerializerHandler(streamWriter)
+            {
+                Option = option ?? defaultSerializerOption
+            };
+            Serializer.FormattingProvider<T>.Get(value, handler);
+            if(isAutoFlush)
+                streamWriter.AutoFlush = true;
+        }
+
 
         /// <summary>
         ///     Converting Json strings to objects

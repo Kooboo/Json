@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Kooboo.Json.Test
 {
@@ -43,6 +44,21 @@ namespace Kooboo.Json.Test
             Assert.AreEqual(
                 "{\"b\":{\"a\":null}}"
                 , json);
+
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(a, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                      "{\"b\":{\"a\":null}}"
+                     , sr.ReadToEnd());
+                }
+            }
+
         }
 
         [TestMethod]
@@ -60,6 +76,20 @@ namespace Kooboo.Json.Test
             Assert.AreEqual(
                 "{\"b\":{\"a\":{}}}"
                 , json);
+
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(a, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                      "{\"b\":{\"a\":{}}}"
+                     , sr.ReadToEnd());
+                }
+            }
         }
 
         [TestMethod]
@@ -77,6 +107,20 @@ namespace Kooboo.Json.Test
             Assert.AreEqual(
                 "{\"b\":{}}"
                 , json);
+
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(a, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                      "{\"b\":{}}"
+                     , sr.ReadToEnd());
+                }
+            }
         }
 
         [TestMethod]
@@ -98,17 +142,59 @@ namespace Kooboo.Json.Test
                 "[[],[],null]"
                 , json);
 
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(array, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                     "[[],[],null]"
+                     , sr.ReadToEnd());
+                }
+            }
+
             option.ReferenceLoopHandling = JsonReferenceHandlingEnum.Remove;
             json = JsonSerializer.ToJson(array, option);
             Assert.AreEqual(
                 "[[],[]]"
                 , json);
 
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(array, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                    "[[],[]]"
+                     , sr.ReadToEnd());
+                }
+            }
+
             option.ReferenceLoopHandling = JsonReferenceHandlingEnum.Empty;
             json = JsonSerializer.ToJson(array, option);
             Assert.AreEqual(
                 "[[],[],[]]"
                 , json);
+
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(array, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                     "[[],[],[]]"
+                     , sr.ReadToEnd());
+                }
+            }
 
             Dictionary<string, object> dic = new Dictionary<string, object>
             {
@@ -122,12 +208,41 @@ namespace Kooboo.Json.Test
                 "[[],[],[],{\"s\":\"s\",\"f\":{}}]"
                 , json);
 
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(array, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                     "[[],[],[],{\"s\":\"s\",\"f\":{}}]"
+                     , sr.ReadToEnd());
+                }
+            }
+
+
             option.ReferenceLoopHandling = JsonReferenceHandlingEnum.Remove;
 
             json = JsonSerializer.ToJson(array, option);
             Assert.AreEqual(
                 "[[],[],{\"s\":\"s\"}]"
                 , json);
+
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(array, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                     "[[],[],{\"s\":\"s\"}]"
+                     , sr.ReadToEnd());
+                }
+            }
 
             dic.Add("xs", "sx");
 
@@ -136,12 +251,40 @@ namespace Kooboo.Json.Test
                 "[[],[],{\"s\":\"s\",\"xs\":\"sx\"}]"
                 , json);
 
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(array, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                     "[[],[],{\"s\":\"s\",\"xs\":\"sx\"}]"
+                     , sr.ReadToEnd());
+                }
+            }
+
             array.Add(child);
 
             json = JsonSerializer.ToJson(array, option);
             Assert.AreEqual(
                 "[[],[],{\"s\":\"s\",\"xs\":\"sx\"},[]]"
                 , json);
+
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(array, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                     "[[],[],{\"s\":\"s\",\"xs\":\"sx\"},[]]"
+                     , sr.ReadToEnd());
+                }
+            }
         }
 
         [TestMethod]
@@ -172,6 +315,20 @@ namespace Kooboo.Json.Test
             Assert.AreEqual(
                 "{\"a\":{},\"b\":{},\"c\":{}}", json);
 
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(d, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                     "{\"a\":{},\"b\":{},\"c\":{}}"
+                     , sr.ReadToEnd());
+                }
+            }
+
             d.a = d;
             /*
              k:a---,
@@ -183,6 +340,20 @@ namespace Kooboo.Json.Test
             Assert.AreEqual(
                 "{\"b\":{},\"c\":{}}", json);
 
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(d, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                     "{\"b\":{},\"c\":{}}"
+                     , sr.ReadToEnd());
+                }
+            }
+
             d.b = d; ;
             /*
              k:a---,
@@ -193,6 +364,20 @@ namespace Kooboo.Json.Test
             json = JsonSerializer.ToJson(d, option);
             Assert.AreEqual(
                 "{\"c\":{}}", json);
+
+            using (MemoryStream mem = new MemoryStream())
+            using (StreamWriter sw = new StreamWriter(mem))
+            {
+                sw.AutoFlush = true;
+                JsonSerializer.ToJson(d, sw, option);
+                using (StreamReader sr = new StreamReader(sw.BaseStream))
+                {
+                    sw.BaseStream.Position = 0;
+                    Assert.AreEqual(
+                     "{\"c\":{}}"
+                     , sr.ReadToEnd());
+                }
+            }
         }
     }
 }
