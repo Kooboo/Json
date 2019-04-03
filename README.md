@@ -158,7 +158,7 @@ case 5:
 因为是指针操作, KoobooJson在反序列化环节几乎不需要去维护一个char池来存放下一个需要读取的json结构片段.
 
 ### 三. 功能介绍
-KoobooJson当前仅支持3个API调用,后续将增加对流的API调用
+KoobooJson当前支持6个API调用
 
 ```
 string Kooboo.Json.JsonSerializer.ToJson<T>(T value, JsonSerializerOption option=null)
@@ -166,6 +166,12 @@ string Kooboo.Json.JsonSerializer.ToJson<T>(T value, JsonSerializerOption option
 T Kooboo.Json.JsonSerializer.ToObject<T>(string json, JsonDeserializeOption option=null)
 
 object Kooboo.Json.JsonSerializer.ToObject(string json, Type type, JsonDeserializeOption option=null)
+
+void Kooboo.Json.JsonSerializer.ToJson<T>(T value, StreamWriter streamWriter, JsonSerializerOption option = null)
+
+T Kooboo.Json.JsonSerializer.ToObject<T>(StreamReader streamReader, JsonDeserializeOption option = null)
+
+object Kooboo.Json.JsonSerializer.ToObject(StreamReader streamReader, Type type, JsonDeserializeOption option = null)
 ```
 
 
