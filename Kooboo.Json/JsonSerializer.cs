@@ -94,6 +94,7 @@ namespace Kooboo.Json
         /// <param name="streamReader">Stream</param>
         /// <param name="option">Json Deserialize Option</param>
         /// <returns>Object</returns>
+        [Obsolete("Current convection processing does not achieve the meaning of the stream itself. Errors occur when the length of the deserialized character exceeds the length of StreamReader's charBuffer. This method will be revised in the next version.", false)]
         public static T ToObject<T>(StreamReader streamReader, JsonDeserializeOption option = null)
         {
             var handler = new JsonDeserializeHandler
@@ -110,6 +111,7 @@ namespace Kooboo.Json
         /// <param name="type">Types converted</param>
         /// <param name="option">Json Deserialize Option</param>
         /// <returns>Object</returns>
+        [Obsolete("Current convection processing does not achieve the meaning of the stream itself. Errors occur when the length of the deserialized character exceeds the length of StreamReader's charBuffer. This method will be revised in the next version.", false)]
         public static object ToObject(StreamReader streamReader, Type type, JsonDeserializeOption option = null)
         {
             var handler = new JsonDeserializeHandler

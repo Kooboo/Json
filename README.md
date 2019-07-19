@@ -1,3 +1,5 @@
+# #[**English**](https://github.com/Kooboo/Json/blob/master/README-EN.md)
+
 #                 KoobooJson - 更小更快的C# JSON序列化工具(基于表达式树构建)
 
 ### 一.   KoobooJson的优点
@@ -10,7 +12,7 @@
 
 KoobooJson 遵循JSON [RFC8259](https://tools.ietf.org/html/rfc8259)规范, 是一款适用于C#的快速的Json文本序列化器
 
-它基于表达式树构建, 在运行时会动态的为每个类型生成高效的解析代码, 这过程包括: 利用静态泛型模板进行缓存, 避免字典查询开销, 避免装箱拆箱消耗, 缓冲池复用, 加速字节复制...
+它基于表达式树构建, 在运行时会动态的为每个类型生成高效的解析代码, 这过程包括: 利用静态泛型模板进行缓存, 避免字典查询开销, 避免装箱拆箱消耗, 缓冲池复用, 加速字节复制,动态生成类型,巧妙的预处理逻辑...
 
 KoobooJson生成代码的方式并没有采用Emit, 而是采用ExpressionTree. ExpressionTree相比Emit而言, 它不能像Emit直接写出最优的IL代码, 它依赖于下层的编译器, 在某些时候它会多生成一些不必要的IL代码路径, 故而性能上有所逊色. 但相较于几乎没有类型检查的Emit而言, ExpressionTree不会出现各种莫名其妙的错误, 它更加安全, 也更加容易扩展维护.
 
@@ -18,7 +20,7 @@ KoobooJson生成代码的方式并没有采用Emit, 而是采用ExpressionTree. 
 
 ![JsonPerformanceComparison](https://github.com/Kooboo/Json/blob/master/JsonPerformanceComparison.png)
 
-上图是使用[BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet)在Net Core2.1上做的Json序列化和反序列化的性能测试,随机生成大量的测试数据,迭代100次后产生的结果,基准报告在[**这里**](https://github.com/Kooboo/Json/tree/master/Kooboo.Json.Benchmark/Reports)
+上图是使用[BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet)在Net Core2.1上做的Json序列化和反序列化的性能测试,随机生成大量的测试数据,迭代100次后产生的结果,可以看见执行同样的工作,KoobooJson所需要耗费的时间最少,在64位环境下击败了这些前辈,基准报告在[**这里**](https://github.com/Kooboo/Json/tree/master/Kooboo.Json.Benchmark/Reports)
 
 > BenchmarkDotNet=v0.11.4, OS=Windows 10.0.17763.316 (1809/October2018Update/Redstone5)
 > Intel Core i7-8550U CPU 1.80GHz (Kaby Lake R), 1 CPU, 8 logical and 4 physical cores
