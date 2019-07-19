@@ -1,4 +1,5 @@
-#[English](https://github.com/Kooboo/Json/blob/master/README-EN.md)
+# #[**English**](https://github.com/Kooboo/Json/blob/master/README-EN.md)
+
 #                 KoobooJson - 更小更快的C# JSON序列化工具(基于表达式树构建)
 
 ### 一.   KoobooJson的优点
