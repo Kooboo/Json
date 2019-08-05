@@ -4,21 +4,21 @@
 
 **1. Compact**
 
-At present, KoobooJson which is only 130K in size doesn’t has any additional dependencies and currently supports .NET Framework 4.5 above, .NET Core 2.x and .NET Standard 2.
+At present, KoobooJson which is only 130K in size doesn't have any additional dependencies and currently supports .NET Framework 4.5 above, .NET Core 2.x and .NET Standard 2.
 
 **2. Fast**
 
-KoobooJson which follows the JSON [RFC8259](https://tools.ietf.org/html/rfc8259) specification is no doubt a fast Json Text Serializer for C#
+KoobooJson which follows the JSON [RFC8259](https://tools.ietf.org/html/rfc8259) specification is no doubt a fast JSON Text Serializer for C#
 
-It is based on the construction of expression tree and generates efficient parsing code for each type dynamically during run time. This process includes: using static generic template to cache, avoiding dictionary query overhead, avoiding box and unbox consumptions, buffer pool reuse, accelerating byte replication,dynamically generating types, and clever preprocessing logic
+It is based on the construction of the expression tree and generates efficient parsing code for each type dynamically during run time. This process includes: using the static generic template to cache, avoiding dictionary query overhead, avoiding box and unbox consumptions, buffer pool reuse, accelerating byte replication, dynamically generating types, and clever preprocessing logic
 
-KoobooJson uses Expression Tree instead of Emit to generate code. Compared with Emit, Expression Tree that relies on the lower compiler can't directly write the best IL code like Emit.In some cases, it geneates more unnecessary IL code steps, which often results in poor performance. But actually Expression Tree is safer and easier to extend and maintain than Emit without any sorts of unexpected errors, which has almost no type checking.
+KoobooJson uses Expression Tree instead of Emit to generate code. Compared with Emit, Expression Tree that relies on the lower compiler can't directly write the best IL code like Emit. In some cases, it generates more unnecessary IL code steps, which often results in poor performance. But actually, Expression Tree is safer and easier to extend and maintain than Emit without any sorts of unexpected errors, which has almost no type checking.
 
 Although Expression Tree may be different from Emit in terms of performance, the performance of KoobooJson is quite impressive!
 
 ![JsonPerformanceComparison](https://github.com/Kooboo/Json/blob/master/JsonPerformanceComparison.png)
 
-The figure above is a performance test of Json serialization and deserialization on .Net Core 2.1 using [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet). A large number of test data are randomly generated, and the results are generated after 100 iterations. As you can see, Kooboo Json took the least time to perform the same job, beating his predecessors in 64-bit environments.The benchmark report is as [following](https://github.com/Kooboo/Json/tree/master/Kooboo.Json.Benchmark/Reports)
+The figure above is a performance test of Json serialization and deserialization on .Net Core 2.1 using [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet). A large number of test data are randomly generated, and the results are generated after 100 iterations. As you can see, Kooboo Json took the least time to perform the same job, beating his predecessors in 64-bit environments. The benchmark report is as [following](https://github.com/Kooboo/Json/tree/master/Kooboo.Json.Benchmark/Reports)
 
 > BenchmarkDotNet=v0.11.4, OS=Windows 10.0.17763.316 (1809/October2018Update/Redstone5)
 > Intel Core i7-8550U CPU 1.80GHz (Kaby Lake R), 1 CPU, 8 logical and 4 physical cores
@@ -30,7 +30,7 @@ The figure above is a performance test of Json serialization and deserialization
 
 **3.  Covering a wide range of types**
 
-In the definition of types, KoobooJson does not implement each set or key-value pair type separately, but divides these FCL types into different templates.
+In the definition of types, KoobooJson does not implement each set or key-value pair type separately but divides these FCL types into different templates.
 
 **a**. KoobooJson classifies serialization into five types:
 
@@ -44,17 +44,17 @@ In the definition of types, KoobooJson does not implement each set or key-value 
 
 - All Types of Behavior that Have Collections
 
-  Any type that can implement IEnumable and satisfy ICollocation's Add behavior or has its own unique set behavior and can inject a set through a constructor will be resolved in a set manner
+  Any type that can implement IEnumerable and satisfy ICollocation's Add behavior or has its unique set behavior and can inject a set through a constructor will be resolved in a set manner
 
 - Special Types
 
   Specific type implementations such as Nullable<>, Lazy<>, Guid, Datatable, DateTime, Type, Task, Thread, Timespan, etc
 
-- Key Value Pair Types for Conventional Models
+- Key-Value Pair Types for Conventional Models
 
   In KoobooJson, if the types do not satisfy the above four, they will be parsed in the form of key-value pairs.KoobooJson serializes all the elements exposed in Model, in which almost all the configurations in the Configurator are about Model,such as aliases, ignoring features, specifying constructors, ignoring stack loop references, capitalizing and capitalizing initials, formatters, etc.It is worth mentioning that KoobooJson will automatically create and returns an object implemented in the interface by default when deserializing the interface type.
 
-**b**. On the type resolution, where the floating type, datetime type, GUID resolution is referred to the [JIL](https://github.com/kevin-montrose/Jil) code, here thanks.
+**b**. On the type resolution, where the Floating type, DateTime type, GUID resolution is referred to the [JIL](https://github.com/kevin-montrose/Jil) code, here thanks.
 
 ​    As an Json library, KoobooJson will continue to support more types, in which the behavior of key pairs and sets in FCL is summarized. So as for these two types, KoobooJson will not implement each type separately as other frameworks do. In fact, the rules defined in 2 and 3 can accommodate most of the key-value pairs or set types in FCL. Currently, the types covered by KoobooJson include:
 Hashtable, SortedList, ArrayList, IDictionary, Dictionary<,>, IList,List<>, IEnumerable<>, IEnumerable, ICollection, ICollection<>, Stack<>, Queue<>, ConcurrentBag<>, ConcurrentQueue<>,  ConcurrentStack<>, SortedDictionary<,>, ConcurrentDictionary<,>, SortedList<,>, IReadOnlyDictionary<,>, ReadOnlyDictionary<,>, ObservableCollection<>, HashSet<>, SortedSet<>, LinkedList<>, ReadOnlyCollection<>, ArraySegment<>, Stack, Queue, IReadOnlyList<>, IReadOnlyCollection<>, ReadOnlyCollection<>, ISet<>, BitArray, URI, NameValueCollection, StringDictionary, ExpandoObject, StringBuilder, Nullable<>, Lazy<>, Guid, Datatable, DateTime, Type, Task, Thread, Timespan, Enum, Exception, Array[], Array[,,,,,]...
@@ -91,25 +91,25 @@ void WriteUserModel(UserModel model,JsonSerializerHandler handler)
 }
 ```
 
-The following code will be generated  if it is a List
+The following code will be generated if it is a List
 
 ```
 handler.sb.Write("[")
 foreach(var user in users)
 {
-	WriteUserModel(user);
-	WriteComma()
+   WriteUserModel(user);
+   WriteComma()
 }
 handler.sb.Write("]")
 ```
 
-In the current version, the container used for KoobooJson serialization is StringBuilder,  which has some additional calls compared to direct ref char [] . At present, we consider building a portable char container in the next version, which distinguishing object sizes, considering stack arrays and reducing memory overhead by pre-scanning size to significantly improve the speed of serialization
+In the current version, the container used for KoobooJson serialization is StringBuilder, which has some additional calls compared to direct ref char []. At present, we consider building a portable char container in the next version, which distinguishing object sizes, considering stack arrays and reducing memory overhead by pre-scanning size to significantly improve the speed of serialization
 
 
 
 **Deserialization**
 
-When the type is first deserialized, KoobooJson will generate parsing code for the type, which is roughly as shown in following.
+When the type is first deserialized, KoobooJson will generate parsing code for the type, which is rough as shown in the following.
 
 ```
 UserModel model = JsonSerializer.ToObject<UserModel>("{\"Obj\":3,\"Name\":\"Tom\",\"Age\":18}");
@@ -137,7 +137,7 @@ void ReadUserModel(string json,JsonDeserializeHandler handler)
 ```
 When KoobooJson generates deserialized code, KoobooJson assumes that the JSON format is correct, and instead of Pre-reading the Json structure part, it uses the code to describe the structure directly. So KoobooJson scans the JSON structure once less and throws an exception directly if there is an error in the JSON structure during execution.
 
-For key matching, KoobooJson generates char-by-char automatic matching code. At present, KoobooJson uses Trie tree as its algorithm, and compares the types of chars one by one. Compared with comparing multiple Chars at a time, this method obviously does not achieve the minimum query path, but under JIT optimization, the two methods achieve almost the same efficiency during testing.
+For key matching, KoobooJson generates char-by-char automatic matching code. At present, KoobooJson uses the Trie tree as its algorithm and compares the types of chars one by one. Compared with comparing multiple Chars at a time, this method does not achieve the minimum query path, but under JIT optimization, the two methods achieve almost the same efficiency during testing.
 
 When reading characters in deserialization, KoobooJson adopts pointer operation for deserialization and speeds up byte reading because it dynamically generates codes for types and knows in advance about the byte length of elements in each type and the value length of their types..
 
@@ -263,7 +263,7 @@ If the elements are normally not sorted by [JsonOrder], then the parsed Json wil
 
 **Key Format of Dictionary**
 
-In the Json specification, the key of a key-value pair must be a string type. In KoobooJson, there are totally 18 types that support Key, including all primitive types (Boolean, Byte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, IntPtr, UIntPtr, Char, Double, and Single), and String, as well as Datetime, GUID, Enum.
+In the Json specification, the key of a key-value pair must be a string type. In KoobooJson, there are 18 types that support Key, including all primitive types (Boolean, Byte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, IntPtr, UIntPtr, Char, Double, and Single), and String, as well as Datetime, GUID, Enum.
 
 
 
