@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>
@@ -11,25 +11,23 @@
     <Copyright>Copyright © Yardi (xiamen) Technology Co. LTD 2019</Copyright>
     <PackageProjectUrl>https://github.com/Kooboo/Json</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Kooboo/Json.git</RepositoryUrl>
-    <PackageReleaseNotes>Obsolete to the de-serialized stream API tag</PackageReleaseNotes>
+    <PackageReleaseNotes>Change the project to a anycpu environment</PackageReleaseNotes>
     <PackageTags>json;kooboo;Serialization;Formatter;Serializer;</PackageTags>
-    <Version>1.0.6</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.7</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
