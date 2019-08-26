@@ -11,9 +11,9 @@
     <Copyright>Copyright © Yardi (xiamen) Technology Co. LTD 2019</Copyright>
     <PackageProjectUrl>https://github.com/Kooboo/Json</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Kooboo/Json.git</RepositoryUrl>
-    <PackageReleaseNotes>add stream api</PackageReleaseNotes>
+    <PackageReleaseNotes>Obsolete to the de-serialized stream API tag</PackageReleaseNotes>
     <PackageTags>json;kooboo;Serialization;Formatter;Serializer;</PackageTags>
-    <Version>1.0.3</Version>
+    <Version>1.0.6</Version>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
