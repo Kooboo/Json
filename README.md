@@ -32,7 +32,7 @@
 
 
 
-##### 值得注意的是,本项目已经加入了.NET核心社区[NCC](https://github.com/dotnetcore/Home)
+#### 值得注意的是,本项目已经加入了.NET核心社区[NCC](https://github.com/dotnetcore/Home)
 
 
 
