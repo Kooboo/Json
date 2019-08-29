@@ -5,22 +5,22 @@
 
 
 ## 为什么需要KoobooJson?
-   **KoobooJson是一款体积小巧没有任何依赖且性能表现强劲的Json工具**。
-    
+- **KoobooJson是一款体积小巧没有任何依赖且性能表现强劲的Json工具**。
+  
    当你需要一个体积较小、性能强劲的Json序列化工具时，当你需要一定的特性支持时(目前15个特性)，当你需要二次开发时(代码结构清晰，且表达式树易于维护)，你需要**KoobooJson**!
 
 
 
 
 ## KoobooJson和Newtonsoft.Json(Json.Net)有什么区别？
-   **KoobooJson与Json.Net的定位不同**。
+- **KoobooJson与Json.Net的定位不同**。
 
    Json.Net是一个非常全面，体系及兼容性非常强大的库，因此它的多样性也带来了一些不可避免的因素，**因为要维持一些兼容和其它特殊功能方面的特性，所以Json.Net中的代码牺牲了性能**。这与一款以性能为主的Json框架之间进行性能比较的话，差异还是很巨大的。另一方面，就是库的体积大小方面，因为特性丰富，所以**Json.Net相对来说体积非常庞大**。
 
 
 
 ## KoobooJson和JIL、Utf-8Json有什么区别？
-   **KoobooJson和JIL和Utf-8Json都是JSON界性能出众的JSON框架**。
+- **KoobooJson和JIL和Utf-8Json都是JSON界性能出众的JSON框架**。
 
    KoobooJson和它们两的区别在于,**JIL和Utf-8Json有一定的依赖条件**,这意味着在某些环境(.NET版本)我不能直接"开箱即用",另一方面,因为它们两有一些预处理的机制,所以**JIL和Utf-8Json的体积相对来说比较庞大**,**而KoobooJson的体积目前在200k之内,相较之非常轻量,并且没有任何依赖**.
 
@@ -30,7 +30,9 @@
 
 
 
-值得注意的是,本项目已经加入了**.NET核心社区[NCC](https://github.com/dotnetcore/Home)**
+
+
+##### 值得注意的是,本项目已经加入了.NET核心社区[NCC](https://github.com/dotnetcore/Home)
 
 
 
