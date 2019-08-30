@@ -5,18 +5,27 @@
 
 ## Why do you need KoobooJson?
 - **KoobooJson is a compact and has no dependencies and performance json tool**
-when you need a small,powerful json serialization tool,when you need some feature support(currently 15 features),when you need secondary development(code structure is clear,and the expression tree is easy to maintain),you need KoobooJson!
+
+  when you need a small,powerful json serialization tool,when you need some feature support(currently 15 features),when you need secondary development(code structure is clear,and the expression tree is easy to maintain),you need KoobooJson!
+
+  
 
 ## What's the difference between KoobooJson and Newtonsoft. Json (Json.Net)?
 - **KoobooJson takes a different direction from Json.Net**
-Json. Net is a very comprehensive, systematic and compatible library, so its diversity also brings some inevitable factors, because to maintain some compatibility and other special features, so the code in Json. Net sacrifices performance.This is a big difference between performance and a performance-based Json framework. On the other hand, Json.Net is very large because of its rich features.
+
+  Json. Net is a very comprehensive, systematic and compatible library, so its diversity also brings some inevitable factors, because to maintain some compatibility and other special features, so the code in Json. Net sacrifices performance.This is a big difference between performance and a performance-based Json framework. On the other hand, Json.Net is very large because of its rich features.
+
+  
 
 ## What is the difference between KoobooJson and JIL, Utf-8Json?
-- **KoobooJson and JIL and Utf-8Json are both JSON frameworks with outstanding performance in the JSON world.**
-The difference between KoobooJson and the two is that JIL and Utf-8Json have certain dependencies，which means that in some environments (. NET version), I can not directly "out-of-the-box use".
-On the other hand, because they have some pre-processing mechanisms, the volume of JIL and Utf-8Json is relatively large, while the volume of Kooboo Json is currently within 200 K. It's very lightweight and doesn't depend on anything.
-It is also worth mentioning that in terms of performance pursuit and selection,KoobooJson's implementation is different from theirs.The current mainstream direct implementation is EMIT technology, but this technology is relatively complex, and KoobooJson is another. One starting point is that more people can participate in the expansion and maintenance, so the technology used is the expression tree.
-In the dynamic technology implementation, the expression tree depends on the parser of the lower CLR, and Emit directly generates the intermediate code, so compared to the performance comparison, Emit is of course better than the expression tree,but Kooboo Json uses some small techniques in the code, such as branch prediction of hot branches, Json reader with fewer calls paths,Pre-processed automaton matching algorithm, accelerated byte comparison technology... This makes Kooboojson perform better than JIL and UTF-8Json.
+- **KoobooJson and JIL and Utf-8Json are both JSON frameworks with outstanding performance in the JSON world**.
+
+  The difference between KoobooJson and the two is that JIL and Utf-8Json have certain dependencies，which means that in some environments (. NET version), I can not directly "out-of-the-box use".
+
+  On the other hand, because they have some pre-processing mechanisms, the volume of JIL and Utf-8Json is relatively large, while the volume of Kooboo Json is currently within 200 K. It's very lightweight and doesn't depend on anything.
+  It is also worth mentioning that in terms of performance pursuit and selection,KoobooJson's implementation is different from theirs.The current mainstream direct implementation is EMIT technology, but this technology is relatively complex, and KoobooJson is another. One starting point is that more people can participate in the expansion and maintenance, so the technology used is the expression tree.
+
+  In the dynamic technology implementation, the expression tree depends on the parser of the lower CLR, and Emit directly generates the intermediate code, so compared to the performance comparison, Emit is of course better than the expression tree,but Kooboo Json uses some small techniques in the code, such as branch prediction of hot branches, Json reader with fewer calls paths,Pre-processed automaton matching algorithm, accelerated byte comparison technology... This makes Kooboojson perform better than JIL and UTF-8Json.
 
 
 ### 一.   Advantages of KoobooJson
