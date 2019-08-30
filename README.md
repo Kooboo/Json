@@ -4,7 +4,10 @@
 
 [![Kooboo](https://img.shields.io/badge/Kooboo-blue.svg)](https://github.com/Kooboo/Kooboo) [![Nuget](https://img.shields.io/nuget/v/Kooboo.Json.svg)](https://www.nuget.org/packages/Kooboo.Json/) [![NCC](https://img.shields.io/badge/member_project_of-.NET_CHINA-red.svg?style=flat&colorB=9E20C8)](https://github.com/dotnetcore/Home)
 
+
+
 ## 为什么需要KoobooJson?
+
 - **KoobooJson是一款体积小巧没有任何依赖且性能表现强劲的Json工具**。
   
    当你需要一个体积较小、性能强劲的Json序列化工具时，当你需要一定的特性支持时(目前15个特性)，当你需要二次开发时(代码结构清晰，且表达式树易于维护)，你需要**KoobooJson**!
@@ -27,6 +30,10 @@
    还要值得一提的就是,在性能上的追求和选择方面,KoobooJson的实现和它们的不同,当前主流的直接实现是EMIT技术,但是这种技术相对来说,维护体系较为复杂,而KoobooJson另一个出发点是可以让更多的人来参与扩展和维护,所以采用的技术是表达式树.
 
    在动态技术实现上,表达式树依赖下层CLR的解析器,而Emit则直接生成中间码,所以较之性能上的比较上来说,Emit当然性能要强于表达式树，但是KoobooJson在代码上运用了一些小技巧，如热点分支的分支预测，调用路径更少的Json读取器,预处理的自动机匹配算法,加速的字节比较技术...这让**Kooboojson的性能表现超过了JIL和UTF-8Json**.
+
+
+
+
 
 
 
