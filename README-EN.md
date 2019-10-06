@@ -1,14 +1,12 @@
-#                 KoobooJson - Smaller and Faster C# JSON Serialization Tool (Construction Based on Expression Tree)
+#                 KoobooJson - Smaller and Faster C# JSON Serialization Tool (Based on Expression Tree)
 
-[![Kooboo](https://img.shields.io/badge/Kooboo-blue.svg)](https://github.com/Kooboo/Kooboo) [![Nuget](https://img.shields.io/nuget/v/Kooboo.Json.svg)](https://www.nuget.org/packages/Kooboo.Json/) [![NCC](https://img.shields.io/badge/member_project_of-NCC-red.svg?style=flat&colorB=9E20C8)](https://github.com/dotnetcore/Home)
+[![Kooboo](https://img.shields.io/badge/Kooboo-blue.svg)](https://github.com/Kooboo/Kooboo) [![Nuget](https://img.shields.io/nuget/v/Kooboo.Json.svg)](https://www.nuget.org/packagKooes/Kooboo.Json/) [![NCC](https://img.shields.io/badge/member_project_of-NCC-red.svg?style=flat&colorB=9E20C8)](https://github.com/dotnetcore/Home)
 
 
-## Why do you need KoobooJson?
-- **KoobooJson is a compact and has no dependencies and performance json tool**
+## Why KoobooJson?
+- **KoobooJson is a small, self-contained & high performance json serialization tool**
 
-  when you need a small,powerful json serialization tool,when you need some feature support(currently 15 features),when you need secondary development(code structure is clear,and the expression tree is easy to maintain),you need KoobooJson!
-
-  
+KoobooJson contains just enough features for your serialzation work. Code structure is very clear that you may continue with your customized development.   
 
 ## What's the difference between KoobooJson and Newtonsoft. Json (Json.Net)?
 - **KoobooJson takes a different direction from Json.Net**
