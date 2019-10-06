@@ -1,22 +1,20 @@
-#                 KoobooJson - Smaller and Faster C# JSON Serialization Tool (Based on Expression Tree)
+# Smaller and Faster C# JSON Serialization Tool (Based on Expression Tree)
 
 [![Kooboo](https://img.shields.io/badge/Kooboo-blue.svg)](https://github.com/Kooboo/Kooboo) [![Nuget](https://img.shields.io/nuget/v/Kooboo.Json.svg)](https://www.nuget.org/packagKooes/Kooboo.Json/) [![NCC](https://img.shields.io/badge/member_project_of-NCC-red.svg?style=flat&colorB=9E20C8)](https://github.com/dotnetcore/Home)
 
 
 ## Why KoobooJson?
-- **KoobooJson is a small, self-contained & high performance json serialization tool**
+- **KoobooJson is a very small, self-contained & high performance json serialization tool**
 
-KoobooJson contains just enough features for your serialzation work. Code structure is very clear that you may continue with your customized development.   
+KoobooJson contains just enough features with focus on performance. Its code structure is very clear that you may continue with your own customized development.   
 
-## What's the difference between KoobooJson and Newtonsoft. Json (Json.Net)?
-- **KoobooJson takes a different direction from Json.Net**
+## Difference between KoobooJson and Newtonsoft. Json (Json.Net)?
+- **Performance and binary size**
 
-  Json. Net is a very comprehensive, systematic and compatible library, so its diversity also brings some inevitable factors, because to maintain some compatibility and other special features, so the code in Json. Net sacrifices performance.This is a big difference between performance and a performance-based Json framework. On the other hand, Json.Net is very large because of its rich features.
+Json.Net is a comprehensive library that contains many features normal users do not need. Those features are the cause of performance & larger binary size.  Kooboo Json is 5 times smaller and 5 times faster. 
 
-  
-
-## What is the difference between KoobooJson and JIL, Utf-8Json?
-- **KoobooJson and JIL and Utf-8Json are both JSON frameworks with outstanding performance in the JSON world**.
+## Difference between KoobooJson and JIL, Utf-8Json?
+- **All of them have great performance, Kooboo Json has no depedency like the other two has**.
 
   The difference between KoobooJson and the two is that JIL and Utf-8Json have certain dependencies，which means that in some environments (. NET version), I can not directly "out-of-the-box use".
 
