@@ -4,7 +4,7 @@
 
 
 ## Why KoobooJson?
-- **KoobooJson is a very small, self-contained & high performance json serialization tool**
+- **KoobooJson is a small, self-contained & high performance json serialization tool**
 
 KoobooJson contains just enough features with focus on performance. Its code structure is very clear that you may continue with your own customized development.   
 
@@ -16,19 +16,18 @@ Json.Net is a comprehensive library that contains many features normal users do 
 ## Difference between KoobooJson and JIL, Utf-8Json?
 - **All of them have great performance, Kooboo Json has no depedency like the other two has**.
 
-  The difference between KoobooJson and the two is that JIL and Utf-8Json have certain dependencies，which means that in some environments (. NET version), I can not directly "out-of-the-box use".
+JIL and Utf-8Json have certain dependencies and implemented some pre-processing mechanisms. This make the libary size relatively large. Kooboo Json does not depend on any other libary and the entire size is less than  150K. 
+  
+JIL, UTF-8JSON and many other tools, use the EMIT IL code technique to reach high performance. This makes code very complex and difficult to read.  Kooboo Josn uses Expression tree for better readability and maintainability.  
 
-  On the other hand, because they have some pre-processing mechanisms, the volume of JIL and Utf-8Json is relatively large, while the volume of Kooboo Json is currently within 200 K. It's very lightweight and doesn't depend on anything.
-  It is also worth mentioning that in terms of performance pursuit and selection,KoobooJson's implementation is different from theirs.The current mainstream direct implementation is EMIT technology, but this technology is relatively complex, and KoobooJson is another. One starting point is that more people can participate in the expansion and maintenance, so the technology used is the expression tree.
-
-  In the dynamic technology implementation, the expression tree depends on the parser of the lower CLR, and Emit directly generates the intermediate code, so compared to the performance comparison, Emit is of course better than the expression tree,but Kooboo Json uses some small techniques in the code, such as branch prediction of hot branches, Json reader with fewer calls paths,Pre-processed automaton matching algorithm, accelerated byte comparison technology... This makes Kooboojson perform better than JIL and UTF-8Json.
+Expression tree will be tranlated into IL code for the .NET run time, while EMIT output IL code directly.  Emit is by default faster than Expression tree.  Kooboo Json uses some self invented techniques, such as branch prediction, fewer calls paths, pre-processed matching, improved byte comparison technology, etc. Those techniques make Kooboojson perform even better than JIL and UTF-8Json.
 
 
-### 一.   Advantages of KoobooJson
+### KoobooJson Advantages
 
-**1. Compact**
+**1. Small**
 
-At present, KoobooJson which is only 130K in size doesn't have any additional dependencies and currently supports .NET Framework 4.5 above, .NET Core 2.x and .NET Standard 2.
+KoobooJson is only 130K and without any dependencies and currently supports .NET Framework 4.5 or above, .NET Core 2.x and .NET Standard 2.
 
 **2. Fast**
 
@@ -52,7 +51,7 @@ The figure above is a performance test of Json serialization and deserialization
 >
 > IterationCount=100  LaunchCount=1  WarmupCount=1  
 
-**3.  Covering a wide range of types**
+**3. Wide range of type coverage**
 
 In the definition of types, KoobooJson does not implement each set or key-value pair type separately but divides these FCL types into different templates.
 
@@ -83,7 +82,7 @@ In the definition of types, KoobooJson does not implement each set or key-value 
 ​    As an Json library, KoobooJson will continue to support more types, in which the behavior of key pairs and sets in FCL is summarized. So as for these two types, KoobooJson will not implement each type separately as other frameworks do. In fact, the rules defined in 2 and 3 can accommodate most of the key-value pairs or set types in FCL. Currently, the types covered by KoobooJson include:
 Hashtable, SortedList, ArrayList, IDictionary, Dictionary<,>, IList,List<>, IEnumerable<>, IEnumerable, ICollection, ICollection<>, Stack<>, Queue<>, ConcurrentBag<>, ConcurrentQueue<>,  ConcurrentStack<>, SortedDictionary<,>, ConcurrentDictionary<,>, SortedList<,>, IReadOnlyDictionary<,>, ReadOnlyDictionary<,>, ObservableCollection<>, HashSet<>, SortedSet<>, LinkedList<>, ReadOnlyCollection<>, ArraySegment<>, Stack, Queue, IReadOnlyList<>, IReadOnlyCollection<>, ReadOnlyCollection<>, ISet<>, BitArray, URI, NameValueCollection, StringDictionary, ExpandoObject, StringBuilder, Nullable<>, Lazy<>, Guid, Datatable, DateTime, Type, Task, Thread, Timespan, Enum, Exception, Array[], Array[,,,,,]...
 
-### 二.   Implementation of KoobooJson
+###   Use of KoobooJson
 
 **Serialization**
 
