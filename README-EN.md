@@ -17,12 +17,18 @@ Json.Net is a comprehensive library that contains many features normal users do 
 - **All of them have great performance, Kooboo Json has no depedency like the other two has**.
 
 JIL and Utf-8Json have certain dependencies and implemented some pre-processing mechanisms. This makes the libary size relatively large. Kooboo Json does not depend on any other libary and the entire size is less than  150K. 
-  
+
 JIL, UTF-8JSON and many other tools, use the EMIT IL code technique to reach high performance. This makes code very complex and difficult to read.  Kooboo Josn uses Expression tree for better readability and maintainability.  
 
 Expression tree will be tranlated into IL code for the .NET run time, while EMIT output IL code directly.  Emit is by default faster than Expression tree.  Kooboo Json uses some self invented techniques, such as branch prediction, shortest call paths, pre-processed matching, improved byte comparison technology, etc. Those techniques make Kooboojson perform better than JIL and UTF-8Json.
 
+----------
+> #### Catalogue 
+>  - [KoobooJson Advantages](#a1)
+>  - [Implementation of KoobooJson](#a2)
+>  - [The Use and Function Description of KoobooJson](#a3)
 
+----------
 ### KoobooJson Advantages
 
 **1. Small**
@@ -82,7 +88,7 @@ In the definition of types, KoobooJson does not implement each set or key-value 
 ​    As an Json library, KoobooJson will continue to support more types, in which the behavior of key pairs and sets in FCL is summarized. So as for these two types, KoobooJson will not implement each type separately as other frameworks do. In fact, the rules defined in 2 and 3 can accommodate most of the key-value pairs or set types in FCL. Currently, the types covered by KoobooJson include:
 Hashtable, SortedList, ArrayList, IDictionary, Dictionary<,>, IList,List<>, IEnumerable<>, IEnumerable, ICollection, ICollection<>, Stack<>, Queue<>, ConcurrentBag<>, ConcurrentQueue<>,  ConcurrentStack<>, SortedDictionary<,>, ConcurrentDictionary<,>, SortedList<,>, IReadOnlyDictionary<,>, ReadOnlyDictionary<,>, ObservableCollection<>, HashSet<>, SortedSet<>, LinkedList<>, ReadOnlyCollection<>, ArraySegment<>, Stack, Queue, IReadOnlyList<>, IReadOnlyCollection<>, ReadOnlyCollection<>, ISet<>, BitArray, URI, NameValueCollection, StringDictionary, ExpandoObject, StringBuilder, Nullable<>, Lazy<>, Guid, Datatable, DateTime, Type, Task, Thread, Timespan, Enum, Exception, Array[], Array[,,,,,]...
 
-###   Use of KoobooJson
+###   Implementation of KoobooJson
 
 **Serialization**
 
@@ -179,7 +185,7 @@ case 5:
 
 Because it is pointer operation, KoobooJson hardly needs to maintain a char pool to store the next JSON structure fragment to be read in the deserialization process.
 
-### 三. Introduction of Functions
+### 三.The Use and Function Description of KoobooJson
 KoobooJson currently supports six API calls
 
 ```
