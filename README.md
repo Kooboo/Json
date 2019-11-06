@@ -2,6 +2,47 @@
 
 #                 KoobooJson - 更小更快的C# JSON序列化工具(基于表达式树构建)
 
+[![Kooboo](https://img.shields.io/badge/Kooboo-blue.svg)](https://github.com/Kooboo/Kooboo) [![Nuget](https://img.shields.io/nuget/v/Kooboo.Json.svg)](https://www.nuget.org/packages/Kooboo.Json/) [![NCC](https://img.shields.io/badge/member_project_of-NCC-red.svg?style=flat&colorB=9E20C8)](https://github.com/dotnetcore/Home)
+
+
+
+## 为什么需要KoobooJson?
+
+- **KoobooJson是一款体积小巧没有任何依赖且性能表现强劲的Json工具**。
+  
+   当你需要一个体积较小、性能强劲的Json序列化工具时，当你需要一定的特性支持时(目前15个特性)，当你需要二次开发时(代码结构清晰，且表达式树易于维护)，你需要**KoobooJson**!
+
+
+
+
+## KoobooJson和Newtonsoft.Json(Json.Net)有什么区别？
+- **KoobooJson与Json.Net的定位不同**。
+
+   Json.Net是一个非常全面，体系及兼容性非常强大的库，因此它的多样性也带来了一些不可避免的因素，**因为要维持一些兼容和其它特殊功能方面的特性，所以Json.Net中的代码牺牲了性能**。这与一款以性能为主的Json框架之间进行性能比较的话，差异还是很巨大的。另一方面，就是库的体积大小方面，因为特性丰富，所以**Json.Net相对来说体积非常庞大**。
+
+
+
+## KoobooJson和JIL、Utf-8Json有什么区别？
+- **KoobooJson和JIL和Utf-8Json都是JSON界性能出众的JSON框架**。
+
+   KoobooJson和它们两的区别在于,**JIL和Utf-8Json有一定的依赖条件**,这意味着在某些环境(.NET版本)我不能直接"开箱即用",另一方面,因为它们两有一些预处理的机制,所以**JIL和Utf-8Json的体积相对来说比较庞大**,**而KoobooJson的体积目前在200k之内,相较之非常轻量,并且没有任何依赖**.
+
+   还要值得一提的就是,在性能上的追求和选择方面,KoobooJson的实现和它们的不同,当前主流的直接实现是EMIT技术,但是这种技术相对来说,维护体系较为复杂,而KoobooJson另一个出发点是可以让更多的人来参与扩展和维护,所以采用的技术是表达式树.
+
+   在动态技术实现上,表达式树依赖下层CLR的解析器,而Emit则直接生成中间码,所以较之性能上的比较上来说,Emit当然性能要强于表达式树，但是KoobooJson在代码上运用了一些小技巧，如热点分支的分支预测，调用路径更少的Json读取器,预处理的自动机匹配算法,加速的字节比较技术...这让**Kooboojson的性能表现超过了JIL和UTF-8Json**.
+
+
+
+----------
+> #### 大纲 
+>  - [KoobooJson的优点](#a1)
+>  - [KoobooJson的实现](#a2)
+>  - [KoobooJson的使用及功能描述](#a3)
+
+----------
+
+<span id="a1"></span>  
+
 ### 一.   KoobooJson的优点
 
 **1. 小巧**
@@ -61,6 +102,8 @@ KoobooJson生成代码的方式并没有采用Emit, 而是采用ExpressionTree. 
 ​    作为一款活跃的Json库,  KoobooJson会不断支持更多的类型,  这其中,  因为对FCL中的键值对和集合的行为进行归纳,  所以对于这两种类型,  KoobooJson并不像其它框架一样去特定的为每种类型单独实现,  实际上, 第2和3所定义的规则可以容纳FCL中的大多数键值对或集合类型.目前KoobooJson所覆盖的类型包括:
 Hashtable, SortedList, ArrayList, IDictionary, Dictionary<,>, IList,List<>, IEnumerable<>, IEnumerable, ICollection, ICollection<>, Stack<>, Queue<>, ConcurrentBag<>, ConcurrentQueue<>,  ConcurrentStack<>, SortedDictionary<,>, ConcurrentDictionary<,>, SortedList<,>, IReadOnlyDictionary<,>, ReadOnlyDictionary<,>, ObservableCollection<>, HashSet<>, SortedSet<>, LinkedList<>, ReadOnlyCollection<>, ArraySegment<>, Stack, Queue, IReadOnlyList<>, IReadOnlyCollection<>, ReadOnlyCollection<>, ISet<>, BitArray, URI, NameValueCollection, StringDictionary, ExpandoObject, StringBuilder, Nullable<>, Lazy<>, Guid, Datatable, DateTime, Type, Task, Thread, Timespan, Enum, Exception, Array[], Array[,,,,,]...
 
+
+<span id="a2"></span> 
 ### 二.   KoobooJson的实现
 
 **序列化**
@@ -159,7 +202,9 @@ case 5:
 
 因为是指针操作, KoobooJson在反序列化环节几乎不需要去维护一个char池来存放下一个需要读取的json结构片段.
 
-### 三. 功能介绍
+
+<span id="a3"></span> 
+### 三.KoobooJson的使用及功能描述
 KoobooJson当前支持6个API调用
 
 ```
