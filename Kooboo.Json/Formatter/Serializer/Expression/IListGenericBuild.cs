@@ -9,7 +9,15 @@ namespace Kooboo.Json.Serializer
     {
         internal static Expression Build(Type type, ParameterExpression instanceArg)
         {
-            Type arrayItemType = type.GetElementType() ?? type.GetGenericArguments()[0];
+            Type arrayItemType = type.GetElementType();
+            if (arrayItemType == null)
+            {
+                Type[] genericArguments = type.GetGenericArguments();
+                if (genericArguments.Length == 0)
+                    arrayItemType = type.GetInterface("IList`1").GetGenericArguments()[0];
+                else
+                    arrayItemType = genericArguments[0];
+            }
 
             List<Expression> methodCall = new List<Expression>();
 
@@ -58,7 +66,7 @@ namespace Kooboo.Json.Serializer
             methodCall.Add(ExpressionMembers.Append("]"));
             methodCall.Add(ExpressionMembers.IsReferenceLoopHandlingIsNoneSerializeStacksArgPop);
             methodCall.Add(Expression.Label(ExpressionMembers.ReturnLable));
-            return Expression.Block(new[] { iList },methodCall);
+            return Expression.Block(new[] { iList }, methodCall);
 
         }
     }

@@ -50,6 +50,10 @@ namespace Kooboo.Json.Deserialize
         internal static readonly BinaryExpression GlobalKeyFormatNotEqualNull = Expression.NotEqual(GlobalKeyFormat,
             Expression.Constant(null, Json.JsonDeserializeOption._GlobalKeyFormat.FieldType));
 
+        //- jsonDeserializeOption.GlobalKeyFormat==null
+        internal static readonly BinaryExpression GlobalKeyFormatEqualNull = Expression.Equal(GlobalKeyFormat,
+           Expression.Constant(null, Json.JsonDeserializeOption._GlobalKeyFormat.FieldType));
+
         //- afterFormatKey
         internal static readonly ParameterExpression AfterFormatKey =
             Expression.Variable(typeof(string), "afterFormatKey");

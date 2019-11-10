@@ -5,18 +5,26 @@ using System.Linq.Expressions;
 namespace Kooboo.Json.Serializer
 {
     [ExpressionBuildType(SerializerBuildTypeEnum.IDictionaryGeneric)]
-    internal class IDictionaryGenericBuild : ExpressionJsonFormatter 
+    internal class IDictionaryGenericBuild : ExpressionJsonFormatter
     {
         internal static Expression Build(Type type, ParameterExpression instanceArg)
         {
-            Type keyType = type.GetGenericArguments()[0];
-            Type valueType = type.GetGenericArguments()[1];
+            Type[] genericArguments = type.GetGenericArguments();
+            if (genericArguments.Length == 0)
+            {
+                Type idic = type.GetInterface("IDictionary`2");
+                genericArguments = idic.GetGenericArguments();
+            }
+
+            Type keyType = genericArguments[0];
+            Type valueType = genericArguments[1];
+
 
             List<Expression> methodCall = new List<Expression>();
             if (!type.IsValueType)
             {
                 ConditionalExpression ifNullAppendNull = Expression.IfThen(
-                        Expression.Equal(instanceArg, Expression.Constant(null,type)),
+                        Expression.Equal(instanceArg, Expression.Constant(null, type)),
                         Expression.Block(ExpressionMembers.Append("null"),
                                             Expression.Return(ExpressionMembers.ReturnLable)
                                              ));

@@ -14,8 +14,20 @@ namespace Kooboo.Json
         CanRead,
         CanWrite
     }
+
+    internal static class TypeKeysCache<T>
+    {
+        internal static string[] Keys = typeof(T).GetModelMembers().Select(e => e.Key).ToArray();
+        internal static bool NotContains(string key) => !Keys.Contains(key);
+    }
+
     internal static class TypeUtils
     {
+        internal static MethodInfo GetContainsMethodInfo(Type t)
+        {
+            return typeof(TypeKeysCache<>).MakeGenericType(t).GetMethod("NotContains", BindingFlags.NonPublic | BindingFlags.Static);
+        }
+
         internal static bool IsAnonymousType(this Type type)
         {
             return Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)

@@ -8,11 +8,11 @@ namespace Kooboo.Json
     /// </summary>
     public class JObject : Dictionary<string, object>
     {
-        public object this[int index]=>base[index.ToString()];
-        public object this[long index] => base[index.ToString()];
-        public object this[Guid index] => base[index.ToString()];
-        public object this[DateTime index] => base[index.ToString()];
-        public object this[float index] => base[index.ToString()];
-        public object this[double index] => base[index.ToString()];
+        public object this[int index] { get { return base[index.ToString()];  }set { base[index.ToString()] = value; } }
+        public object this[long index] { get { return base[index.ToString()]; } set { base[index.ToString()] = value; } }
+        public object this[Guid index] { get { return base[index.ToString()]; } set { base[index.ToString()] = value; } }
+        public object this[DateTime index] { get { return base[index.ToString()]; } set { base[index.ToString()] = value; } }
+        public object this[float index] { get { return base[index.ToString()]; } set { base[index.ToString()] = value; } }
+        public object this[double index] { get { return base[index.ToString()]; } set { base[index.ToString()] = value; } }
     }
 }

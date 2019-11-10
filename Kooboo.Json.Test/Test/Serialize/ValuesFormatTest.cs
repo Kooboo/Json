@@ -168,5 +168,32 @@ namespace Kooboo.Json.Test
             Assert.IsTrue(JsonValidator.IsValid(json));
             Assert.AreEqual("null", json);
         }
+
+        [TestMethod]
+        public void JObject_indexer_allows_multiple_types()
+        {
+            JObject jobject = new JObject();
+            jobject[1] = "a";
+            jobject["2"] = "b";
+            jobject[long.MaxValue] = "c";
+            jobject[double.MaxValue] = "d";
+            jobject[float.MaxValue] = "e";
+            jobject[DateTime.MaxValue] = "h";
+            jobject[Guid.Empty] = "1";
+            var json = JsonSerializer.ToJson(jobject);
+            Assert.IsTrue(JsonValidator.IsValid(json));
+            Assert.AreEqual("{\"1\":\"a\",\"2\":\"b\",\"9223372036854775807\":\"c\",\"1.79769313486232E+308\":\"d\",\"3.402823E+38\":\"e\",\"9999/12/31 23:59:59\":\"h\",\"00000000-0000-0000-0000-000000000000\":\"1\"}", json);
+        }
+
+        [TestMethod]
+        public void JArray_serialize_can_be_used_normally()
+        {
+            JArray jarray = new JArray();
+            jarray.Add(3);
+            jarray.Add("4");
+            var json = JsonSerializer.ToJson(jarray);
+            Assert.IsTrue(JsonValidator.IsValid(json));
+            Assert.AreEqual("[3,\"4\"]",json);
+        }
     }
 }
