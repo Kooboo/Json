@@ -11,9 +11,9 @@
     <Copyright>Copyright © Yardi (xiamen) Technology Co. LTD 2019</Copyright>
     <PackageProjectUrl>https://github.com/Kooboo/Json</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Kooboo/Json.git</RepositoryUrl>
-    <PackageReleaseNotes>Change the project to a anycpu environment</PackageReleaseNotes>
+    <PackageReleaseNotes>Added the function of ignoring redundant key and specified key in JSON during deserialization, extended the indexer of jobject, and fixed the acquisition of generic types in special cases during serialization</PackageReleaseNotes>
     <PackageTags>json;kooboo;Serialization;Formatter;Serializer;</PackageTags>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
