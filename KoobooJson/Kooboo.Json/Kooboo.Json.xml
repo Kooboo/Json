@@ -1,0 +1,461 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Kooboo.Json</name>
+    </assembly>
+    <members>
+        <member name="T:Kooboo.Json.AliasAttribute">
+            <summary>
+                别名,标记于字段或属性上的特性
+                Alias,Characteristics marked on fields or property
+            </summary>
+        </member>
+        <member name="M:Kooboo.Json.AliasAttribute.#ctor(System.String)">
+            <summary>
+                Structural aliases
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="T:Kooboo.Json.IgnoreKeyAttribute">
+            <summary>
+                被标记的元素,在序列化或反序列化时时将被忽略
+                Marked elements are ignored when serialized or deserialized
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.IgnoreDefaultValueAttribute">
+            <summary>
+                当被标记元素的值为默认值时,序列化时将忽略其元素
+                When the value of the tagged element is the default, its element is ignored when serialized
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JsonDeserializeCtorAttribute">
+            <summary>
+                对Model进行Json反序列化时指定一个构造函数
+                Specify a constructor for Json deserialization of Model
+            </summary>
+        </member>
+        <member name="M:Kooboo.Json.JsonDeserializeCtorAttribute.#ctor(System.Object[])">
+            <summary>
+                反序列化时的指定构造函数以及参数，args必须和构造函数参数匹配
+                Deserializing the specified constructor and parameters, args must match the constructor parameters
+            </summary>
+            <param name="args">该构造函数的参数,The parameters of the constructor</param>
+        </member>
+        <member name="T:Kooboo.Json.JsonOnlyIncludeAttribute">
+            <summary>
+                序列化仅包含此元素,和Ignore相反
+                Serialization contains only this element, as opposed to Ignore
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JsonOrderAttribute">
+            <summary>
+                元素排序,标记于字段或属性上的特性
+                Element sort, a feature marked on a field or property
+            </summary>
+        </member>
+        <member name="M:Kooboo.Json.JsonOrderAttribute.#ctor(System.UInt16)">
+            <summary>
+                JsonOrder
+            </summary>
+            <param name="orderNum">Order number</param>
+        </member>
+        <member name="T:Kooboo.Json.ValueFormatAttribute">
+            <summary>
+                对Model的值格式化器特性,可标注于字段，属性，结构或类上,(字段/属性) 优先级大于 (结构/类)
+                Key formatter features of Model can be labeled on fields, properties, structures or classes with priority of
+                (fields/properties) over (structures/classes)
+            </summary>
+        </member>
+        <member name="M:Kooboo.Json.ValueFormatAttribute.WriteValueFormat(System.Object,System.Type,Kooboo.Json.JsonSerializerHandler,System.Boolean@)">
+            <summary>
+                序列化时 - Model的Value的格式化器
+                Serialization time - Key formatter for Model
+            </summary>
+            <param name="value">需要被格式化的源元素数据,Source element data that needs to be formatted</param>
+            <param name="type">值的类型,The type of the value</param>
+            <param name="handler">用于提供一些配置选项,Used to provide some configuration options</param>
+            <param name="isValueFormat">决定最终是否进行值格式化,Determines whether the value is ultimately formatted</param>
+            <returns>格式化后的结果,Formatted results</returns>
+        </member>
+        <member name="M:Kooboo.Json.ValueFormatAttribute.ReadValueFormat(System.String,System.Type,Kooboo.Json.JsonDeserializeHandler,System.Boolean@)">
+            <summary>
+                反序列化时 - Model的Value的格式化器
+                When deserializing - Key formatter for Model
+            </summary>
+            <param name="value">从Json字符串中读取的匹配字符串,Matched strings read from Json strings</param>
+            <param name="type">值的类型,The type of the value</param>
+            <param name="handler">用于提供一些配置选项,Used to provide some configuration options</param>
+            <param name="isValueFormat">决定最终是否进行值格式化,Determines whether the value is ultimately formatted</param>
+            <returns>格式化后的结果,Formatted results</returns>
+        </member>
+        <member name="T:Kooboo.Json.JsonDeserializationTypeResolutionException">
+            <summary>
+                类型解析错误
+                Json Deserialization TypeResolution Exception
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JsonNoSupportedDeserializeTypeException">
+            <summary>
+                不受支持的解析类型
+                Unsupported parse type
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JsonWrongCharacterException">
+            <summary>
+                错误的json字符
+                Json Wrong Character
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JArray">
+            <summary>
+            Json Array
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JObject">
+            <summary>
+            Json Object
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JsonDeserializeGlobalValueFormatDelegate">
+            <summary>
+                 对Model进行Json反序列化时全局值格式化器
+                 Global value formatter for Json deserialization of Model
+            </summary>
+            <param name="jsonFragment">Json字符串中的片段,Fragments in the Json string</param>
+            <param name="elementType">该jsonFragment所对应的类型,The type corresponding to the jsonFragment</param>
+            <param name="jsonDeserializeHandler">提供一些选项进行访问,Provides options for access</param>
+            <param name="isValueFormat">决定最终是否进行值格式化,Determines whether the value is ultimately formatted</param>
+            <returns></returns>
+        </member>
+        <member name="T:Kooboo.Json.JsonDeserializeHandler">
+            <summary>
+                Json Deserialize Handler
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonDeserializeHandler.Option">
+            <summary>
+                Json Serializer Option
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JsonDeserializeOption">
+            <summary>
+                反序列化全局配置项
+                Deserialized global configuration's options
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonDeserializeOption.GlobalKeyFormat">
+            <summary>
+                对Model的全局Key格式化器
+                Read the first letter of Key in Model: default, capitalization, lowercase
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonDeserializeOption.GlobalValueFormat">
+            <summary>
+                对Model的全局Value格式化器
+                Global Key Formatter for Model
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonDeserializeOption.JsonCharacterReadState">
+            <summary>
+                对Model中的字符读取状态：默认、首字母大写、首字母小写、忽略大小写
+                Read status for characters in the Model: Default, Initial uppercase, Initial lowercase, Ignore case
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JsonCharacterReadStateEnum">
+            <summary>
+                对Model中的字符读取状态：默认、首字母大写、首字母小写、忽略大小写
+                Read status for characters in the Model: Default, Initial uppercase, Initial lowercase, Ignore case
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonCharacterReadStateEnum.None">
+            <summary>
+            默认
+            Default
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonCharacterReadStateEnum.InitialUpper">
+            <summary>
+            首字母大写
+            Initial uppercase
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonCharacterReadStateEnum.InitialLower">
+            <summary>
+            首字母小写
+            Initial lowercase
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonCharacterReadStateEnum.IgnoreCase">
+            <summary>
+            仅反序列化时使用,忽略大小写
+            Used only for deserialization ,Ignore case
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.DatetimeFormatEnum">
+            <summary>
+            Datetime格式化枚举
+            Datetime Format Enumeration
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.DatetimeFormatEnum.ISO8601">
+            <summary>
+            DateTimes will be formatted as "yyyy-MM-ddThh:mm:ssZ" where
+            yyyy is the year, MM is the month (starting at 01), dd is the day (starting at 01),
+            hh is the hour (starting at 00, continuing to 24), mm is the minute (start at 00),
+            and ss is the second (starting at 00).
+            
+            Examples:
+                2011-07-14T19:43:37Z
+                2012-01-02T03:04:05Z
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.DatetimeFormatEnum.RFC1123">
+            <summary>
+            DateTimes will be formatted as "ddd, dd MMM yyyy HH:mm:ss GMT" where
+            ddd is the abbreviation of a day, dd is the day (starting at 01), MMM is the abbreviation of a month,
+            yyyy is the year, HH is the hour (starting at 00, continuing to 24), mm is the minute (start at 00),
+            and ss is the second (starting at 00), and GMT is a literal indicating the timezone (always GMT).
+            
+            Examples:
+                Thu, 10 Apr 2008 13:30:00 GMT
+                Tue, 10 Mar 2015 00:14:34 GMT
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.DatetimeFormatEnum.Microsoft">
+            <summary>
+            DateTimes will be formatted as "\/Date(##...##)\/" where ##...## is the 
+            number of milliseconds since the unix epoch (January 1st, 1970 UTC).
+            See: https://msdn.microsoft.com/en-us/library/bb299886.aspx
+            
+            Example:
+                "\/Date(628318530718)\/"
+                
+            TimeSpans will be formatted as "days.hours:minutes:seconds.fractionalSeconds"
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JsonSerializerGlobalValueFormatDelegate">
+            <summary>
+                对Model进行Json序列化时全局值格式化器
+                The global value formatter when the Model is Json serialized
+            </summary>
+            <param name="value">传进来的值,The value passed in</param>
+            <param name="type">值的类型,The type of the value</param>
+            <param name="handler">提供一些选项进行访问,Provides options for access</param>
+            <param name="isValueFormat">决定最终是否进行值格式化,Determines whether the value is ultimately formatted</param>
+            <returns></returns>
+        </member>
+        <member name="T:Kooboo.Json.JsonReferenceHandlingEnum">
+            <summary>
+                发生循环引用时的处理方式枚举
+                Enumeration of processing methods when circular references occur
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonReferenceHandlingEnum.None">
+            <summary>
+            默认,不处理
+            Default
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonReferenceHandlingEnum.Null">
+            <summary>
+            将值处理为null
+            Processing the value to null
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonReferenceHandlingEnum.Remove">
+            <summary>
+            删除该值
+            Delete this value
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonReferenceHandlingEnum.Empty">
+            <summary>
+            返回空(Keyvalue =>{}，Array=>[])
+            Return empty
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JsonSerializerHandler">
+            <summary>
+                提供了用于在序列化中的一些配置
+                Provides some configuration for serialization
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerHandler.WriteLong">
+            <summary>
+            Write Long
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerHandler.WriteChar">
+            <summary>
+            Write Char
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerHandler.WriteString">
+            <summary>
+            Write String
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerHandler.WriteChars">
+            <summary>
+            Write Chars
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerHandler.Option">
+            <summary>
+            Json Serializer Option
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerHandler.SerializeStacks">
+            <summary>
+            Used for infinite loop interreferences
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerHandler.CommaIndexLists">
+            <summary>
+            Used for JsonRefernceHandlingEnum. Remove case, customtype comma to delete
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JsonSerializerOption">
+            <summary>
+                序列化全局配置器
+                Serializer global configuration's options
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerOption.DatetimeFormat">
+            <summary>
+            Datetime格式化枚举，默认ISO8601
+            Datetime formatted enumeration, default ISO8601
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerOption.TimespanFormat">
+            <summary>
+            Timespan格式化枚举，默认ISO8601
+            Timespan formatted enumeration, default ISO8601
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerOption.IsEnumNum">
+            <summary>
+            枚举是否被序列化为数字，true -> 数字, false -> 字符
+            Enumeration is serialized into numbers, true - > numbers, false - > characters
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerOption.IsByteArrayFormatBase64">
+            <summary>
+            byte[]数组是否按照base64格式来序列化, true -> base64 , false -> array
+            Is the byte [] array serialized in Base64 format
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerOption.JsonCharacterRead">
+            <summary>
+            对Model中的Key的首字母写入状态：默认，大写，小写
+            Write the first letter of Key in Model: default, capitalization, lowercase
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerOption.ReferenceLoopHandling">
+            <summary>
+            对实例因互相引用而导致的无限循环的情况的处理
+            Handling of infinite loops caused by cross-references of instances
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerOption.IsIgnoreValueNull">
+            <summary>
+            是否忽略Model中原本值为null的对象(不包括由忽略互引用导致的null）
+            Whether to ignore null objects in Model (excluding null caused by ignoring mutual references)
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerOption.IgnoreKeys">
+            <summary>
+            对Model中要忽略写入的Key
+            Key to ignore writing in Model
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerOption.GlobalKeyFormat">
+            <summary>
+            对Model的全局Key格式化器
+            Global Key formatter for Model
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.JsonSerializerOption.GlobalValueFormat">
+            <summary>
+            对Model的全局Value格式化器
+            Global Key Formatter for Model
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.TimespanFormatEnum">
+            <summary>
+                Timespan格式化枚举
+                Timespan Format Enumeration
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.TimespanFormatEnum.ISO8601">
+            <summary>
+            TimeSpans will be formatted as ISO8601 durations.
+            Examples: P123DT11H30M2.3S
+            </summary>
+        </member>
+        <member name="F:Kooboo.Json.TimespanFormatEnum.Microsoft">
+            <summary>
+            TimeSpans will be formatted as "days.hours:minutes:seconds.fractionalSeconds"
+            </summary>
+        </member>
+        <member name="T:Kooboo.Json.JsonSerializer">
+            <summary>
+                 KoobooJson Serializer
+            </summary>
+        </member>
+        <member name="M:Kooboo.Json.JsonSerializer.ToJson``1(``0,Kooboo.Json.JsonSerializerOption)">
+            <summary>
+                Serialize objects into JSON strings
+            </summary>
+            <typeparam name="T">Key type</typeparam>
+            <param name="value">Key</param>
+            <param name="option">Serialize option</param>
+            <returns>JSON strings</returns>
+        </member>
+        <member name="M:Kooboo.Json.JsonSerializer.ToJson``1(``0,System.IO.StreamWriter,Kooboo.Json.JsonSerializerOption)">
+            <summary>
+                Serialize Object from the StreamWriter
+            </summary>
+            <typeparam name="T">Key type</typeparam>
+            <param name="value">Key</param>
+            <param name="streamWriter">Stream</param>
+            <param name="option">Serialize option</param>
+        </member>
+        <member name="M:Kooboo.Json.JsonSerializer.ToObject``1(System.String,Kooboo.Json.JsonDeserializeOption)">
+            <summary>
+                Converting Json strings to objects
+            </summary>
+            <typeparam name="T">Types converted</typeparam>
+            <param name="json">Json string</param>
+            <param name="option">Json Deserialize Option</param>
+            <returns>Object</returns>
+        </member>
+        <member name="M:Kooboo.Json.JsonSerializer.ToObject(System.String,System.Type,Kooboo.Json.JsonDeserializeOption)">
+            <summary>
+                Converting Json strings to objects
+            </summary>
+            <param name="json">Json string</param>
+            <param name="type">Types converted</param>
+            <param name="option">Json Deserialize Option</param>
+            <returns>Object</returns>
+        </member>
+        <member name="M:Kooboo.Json.JsonSerializer.ToObject``1(System.IO.StreamReader,Kooboo.Json.JsonDeserializeOption)">
+            <summary>
+                Deserializes JSON from the StreamReader
+            </summary>
+            <typeparam name="T">Types converted</typeparam>
+            <param name="streamReader">Stream</param>
+            <param name="option">Json Deserialize Option</param>
+            <returns>Object</returns>
+        </member>
+        <member name="M:Kooboo.Json.JsonSerializer.ToObject(System.IO.StreamReader,System.Type,Kooboo.Json.JsonDeserializeOption)">
+            <summary>
+                Deserializes JSON from the StreamReader
+            </summary>
+            <param name="streamReader">Stream</param>
+            <param name="type">Types converted</param>
+            <param name="option">Json Deserialize Option</param>
+            <returns>Object</returns>
+        </member>
+    </members>
+</doc>
